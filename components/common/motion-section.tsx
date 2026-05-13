@@ -10,7 +10,7 @@ export function MotionSection({
   return (
     <section
       className={cn(
-        "animate-in fade-in slide-in-from-bottom-4 duration-700",
+        "animate-in duration-700 fade-in slide-in-from-bottom-4",
         className
       )}
       {...props}

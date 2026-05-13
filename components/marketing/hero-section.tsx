@@ -14,7 +14,7 @@ export function HeroSection() {
   return (
     <section className="relative mx-auto grid min-h-[calc(100svh-5rem)] max-w-7xl items-center gap-10 px-4 py-16 lg:grid-cols-[0.9fr_1.1fr] lg:py-20">
       <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
-        <div className="absolute top-10 left-10 h-72 w-72 rounded-full bg-primary/20 blur-3xl" />
+        <div className="absolute top-10 left-20 h-72 w-72 rounded-full bg-primary/20 blur-3xl" />
         <div className="absolute right-10 bottom-20 h-80 w-80 rounded-full bg-cyan-400/10 blur-3xl" />
       </div>
       <motion.div

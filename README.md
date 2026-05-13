@@ -80,17 +80,20 @@ A modern, high-performance portfolio and dashboard built with cutting-edge web t
 ### Installation
 
 1. **Clone the repository**
+
    ```bash
    git clone https://github.com/AbdullahAlMaksud/AbdullahAlMaksudWeb.git
    cd AbdullahAlMaksudWeb
    ```
 
 2. **Install dependencies**
+
    ```bash
    bun install
    ```
 
 3. **Start development server**
+
    ```bash
    bun run dev
    ```
@@ -137,6 +140,7 @@ next dev --turbopack
 ### Site Configuration
 
 Edit `constants/site.ts` to customize:
+
 - Owner name and bio
 - Site metadata
 - Tech stack display
@@ -145,6 +149,7 @@ Edit `constants/site.ts` to customize:
 ### Mock Data
 
 Modify `constants/mock-data.ts` to update:
+
 - Dashboard analytics data
 - Project information
 - Blog posts
@@ -153,6 +158,7 @@ Modify `constants/mock-data.ts` to update:
 ### Theming
 
 The app uses `next-themes` for dark/light mode support. Customize colors in:
+
 - `app/globals.css` - CSS variables
 - `tailwind.config.ts` - Tailwind configuration
 
@@ -193,6 +199,7 @@ This project is optimized for deployment on:
 ## 📚 Pages
 
 ### Public Pages
+
 - **Home** (`/`) - Landing page with hero section
 - **About** (`/about`) - About page
 - **Blog** (`/blog`) - Blog listing with dynamic articles (`/blog/[slug]`)
@@ -200,6 +207,7 @@ This project is optimized for deployment on:
 - **Projects** (`/projects`) - Projects gallery
 
 ### Dashboard Pages
+
 - **Overview** (`/dashboard`) - Main dashboard with analytics
 - **Analytics** (`/dashboard/analytics`) - Detailed analytics charts
 - **Blog** (`/dashboard/blog`) - Blog management
@@ -248,6 +256,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 👨‍💻 Author
 
 **Abdullah Al Maksud**
+
 - Portfolio: [abdullahalmaksud.com](https://abdullahalmaksud.com)
 - GitHub: [@AbdullahAlMaksud](https://github.com/AbdullahAlMaksud)
 - Email: contact@abdullahalmaksud.com
