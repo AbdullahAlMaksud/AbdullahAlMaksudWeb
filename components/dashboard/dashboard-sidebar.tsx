@@ -51,12 +51,13 @@ export function DashboardSidebar({
   return (
     <aside
       className={cn(
-        "flex h-full flex-col border-r bg-sidebar/80 backdrop-blur-xl transition-[width] duration-300",
+        "flex flex-col border-r bg-sidebar/80 backdrop-blur-xl transition-[width] duration-300",
+        mobile ? "h-full" : "sticky top-0 h-svh max-h-svh overflow-hidden",
         compact ? "w-[88px]" : "w-[276px]",
         mobile && "w-full border-r-0"
       )}
     >
-      <div className="flex h-20 items-center justify-between px-5">
+      <div className="flex h-20 shrink-0 items-center justify-between px-5">
         <Logo compact={compact} name={site.name} />
         {!mobile && (
           <Button
@@ -69,7 +70,7 @@ export function DashboardSidebar({
           </Button>
         )}
       </div>
-      <nav className="grid gap-1 px-3">
+      <nav className="grid min-h-0 flex-1 content-start gap-1 overflow-y-auto px-3 pb-2">
         {dashboardNav.map((item) => {
           const active =
             item.href === "/dashboard"
@@ -92,7 +93,7 @@ export function DashboardSidebar({
           )
         })}
       </nav>
-      <div className="mt-auto p-4">
+      <div className="shrink-0 p-4">
         <div className="flex items-center gap-3 rounded-2xl bg-muted/60 p-3">
           <Avatar>
             <AvatarImage src="/images/portfolio-hero.png" alt={site.owner} />

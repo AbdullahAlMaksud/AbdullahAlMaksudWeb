@@ -94,7 +94,20 @@
     "resume": "রেজুমে",
     "resumeDescription": "সাম্প্রতিক প্রজেক্ট, লেখা, এবং frontend system work-এর সংক্ষিপ্ত snapshot।",
     "downloadResume": "রেজুমে ডাউনলোড",
-    "email": "ইমেইল"
+    "email": "ইমেইল",
+    "contact": {
+      "title": "যোগাযোগ",
+      "description": "কোনো প্রোডাক্ট, লেখা, বা ইন্টারফেস সিস্টেম নিয়ে কাজ করতে চাইলে ছোট করে জানান।",
+      "name": "নাম",
+      "namePlaceholder": "আপনার নাম",
+      "email": "ইমেইল",
+      "emailPlaceholder": "you@example.com",
+      "subject": "বিষয়",
+      "subjectPlaceholder": "প্রজেক্ট বা সহযোগিতার বিষয়",
+      "message": "মেসেজ",
+      "messagePlaceholder": "আপনি কী নিয়ে কাজ করছেন লিখুন...",
+      "submit": "মেসেজ পাঠান"
+    }
   },
   "article": {
     "toc": "সূচিপত্র"

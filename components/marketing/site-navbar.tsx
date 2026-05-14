@@ -46,7 +46,11 @@ export function SiteNavbar({
   return (
     <header className="sticky top-1 z-40 mx-auto w-full max-w-7xl px-4">
       <div className="glass-panel premium-border flex h-16 items-center justify-between rounded-2xl px-4">
-        <Logo name={siteName} />
+        <Logo
+          name={siteName}
+          className="flex-1 pr-3 md:flex-none md:pr-0"
+          textClassName="truncate md:max-w-none"
+        />
         <nav className="hidden items-center gap-1 md:flex">
           {nav.map((item) => {
             const active =

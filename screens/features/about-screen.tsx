@@ -3,6 +3,7 @@ import { Code2, Download, Mail, Network } from "lucide-react"
 
 import { SectionHeading } from "@/components/common/section-heading"
 import { SpotlightCard } from "@/components/common/spotlight-card"
+import { ContactForm } from "@/components/marketing/contact-form"
 import { PageHero } from "@/components/marketing/page-hero"
 import { Button, buttonVariants } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
@@ -54,6 +55,23 @@ export async function AboutScreen() {
                 {t("about.email")}
               </Link>
             </div>
+            <Separator className="my-6" />
+            <ContactForm
+              email={siteConfig.email}
+              labels={{
+                title: t("about.contact.title"),
+                description: t("about.contact.description"),
+                name: t("about.contact.name"),
+                namePlaceholder: t("about.contact.namePlaceholder"),
+                email: t("about.contact.email"),
+                emailPlaceholder: t("about.contact.emailPlaceholder"),
+                subject: t("about.contact.subject"),
+                subjectPlaceholder: t("about.contact.subjectPlaceholder"),
+                message: t("about.contact.message"),
+                messagePlaceholder: t("about.contact.messagePlaceholder"),
+                submit: t("about.contact.submit"),
+              }}
+            />
           </div>
         </SpotlightCard>
         <div className="grid gap-6">
@@ -89,7 +107,7 @@ export async function AboutScreen() {
             </div>
           </SpotlightCard>
           <SpotlightCard>
-            <div id="contact" className="p-6">
+            <div className="p-6">
               <h2 className="text-2xl font-semibold">{t("about.resume")}</h2>
               <p className="mt-3 text-sm leading-6 text-muted-foreground">
                 {t("about.resumeDescription")}

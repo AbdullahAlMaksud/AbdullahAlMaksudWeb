@@ -94,7 +94,20 @@
     "resume": "Resume",
     "resumeDescription": "A concise snapshot of recent projects, writing, and frontend systems work.",
     "downloadResume": "Download Resume",
-    "email": "Email"
+    "email": "Email",
+    "contact": {
+      "title": "Contact",
+      "description": "Send a quick note about a product, article, or interface system you want to shape.",
+      "name": "Name",
+      "namePlaceholder": "Your name",
+      "email": "Email",
+      "emailPlaceholder": "you@example.com",
+      "subject": "Subject",
+      "subjectPlaceholder": "Project or collaboration topic",
+      "message": "Message",
+      "messagePlaceholder": "Tell me what you are working on...",
+      "submit": "Send Message"
+    }
   },
   "article": {
     "toc": "Table of contents"

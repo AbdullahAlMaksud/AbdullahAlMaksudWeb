@@ -3,9 +3,10 @@
 import * as React from "react"
 import { useRouter } from "next/navigation"
 
-import { Switch } from "@/components/ui/switch"
 import type { Locale } from "@/lib/i18n/resources"
 import { cn } from "@/lib/utils"
+import { LanguagesIcon } from "lucide-react"
+import { Button } from "../ui/button"
 
 export type LanguageSwitcherLabels = {
   label: string
@@ -39,11 +40,12 @@ export function LanguageSwitcher({
   }
 
   return (
-    <div
-      aria-label={labels.label}
-      className="inline-flex h-10 items-center gap-2 rounded-xl border bg-background/70 px-2 text-xs font-semibold"
-      title={labels.switch}
+    <Button
+      onClick={() => setLocale(isBangla ? "en" : "bn")}
+      disabled={isPending}
+      variant={isBangla ? "outline" : "secondary"}
     >
+      <LanguagesIcon />
       <span
         className={cn(
           "w-6 text-center transition-colors",
@@ -51,24 +53,8 @@ export function LanguageSwitcher({
         )}
         title={labels.en}
       >
-        EN
+        {isBangla ? "En" : "বাং"}
       </span>
-      <Switch
-        aria-label={labels.switch}
-        checked={isBangla}
-        disabled={isPending}
-        onCheckedChange={(checked) => setLocale(checked ? "bn" : "en")}
-        size="sm"
-      />
-      <span
-        className={cn(
-          "w-6 text-center transition-colors",
-          isBangla ? "text-foreground" : "text-muted-foreground"
-        )}
-        title={labels.bn}
-      >
-        BN
-      </span>
-    </div>
+    </Button>
   )
 }
