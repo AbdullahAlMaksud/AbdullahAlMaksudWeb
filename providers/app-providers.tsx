@@ -6,10 +6,19 @@ import { Toaster } from "sonner"
 
 import { ThemeProvider } from "@/components/theme-provider"
 import { TooltipProvider } from "@/components/ui/tooltip"
-import { CommandPalette } from "@/components/common/command-palette"
+import {
+  CommandPalette,
+  type CommandPaletteLabels,
+} from "@/components/common/command-palette"
 import { CursorGlow } from "@/components/common/cursor-glow"
 
-export function AppProviders({ children }: { children: React.ReactNode }) {
+export function AppProviders({
+  children,
+  commandLabels,
+}: {
+  children: React.ReactNode
+  commandLabels: CommandPaletteLabels
+}) {
   const [queryClient] = React.useState(
     () =>
       new QueryClient({
@@ -28,7 +37,7 @@ export function AppProviders({ children }: { children: React.ReactNode }) {
         <TooltipProvider>
           <CursorGlow />
           {children}
-          <CommandPalette />
+          <CommandPalette labels={commandLabels} />
           <Toaster richColors closeButton position="top-right" />
         </TooltipProvider>
       </ThemeProvider>

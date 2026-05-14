@@ -6,15 +6,27 @@ import { MotionSection } from "@/components/common/motion-section"
 import { SectionHeading } from "@/components/common/section-heading"
 import { SpotlightCard } from "@/components/common/spotlight-card"
 import { Badge } from "@/components/ui/badge"
-import { blogPosts } from "@/constants/mock-data"
+import type { BlogPost } from "@/types/content"
 
-export function LatestBlogSection() {
+export function LatestBlogSection({
+  blogPosts,
+  labels,
+}: {
+  blogPosts: BlogPost[]
+  labels: {
+    eyebrow: string
+    title: string
+    description: string
+    read: string
+    categories: Record<BlogPost["category"], string>
+  }
+}) {
   return (
     <MotionSection className="mx-auto max-w-7xl px-4 py-16">
       <SectionHeading
-        eyebrow="Latest Writing"
-        title="Essays for builders who care about craft."
-        description="Notes on React, interface design, writing systems, and the quiet details that make software feel better."
+        eyebrow={labels.eyebrow}
+        title={labels.title}
+        description={labels.description}
       />
       <div className="mt-8 grid gap-5 md:grid-cols-3">
         {blogPosts.map((post) => (
@@ -28,7 +40,7 @@ export function LatestBlogSection() {
                 className="aspect-[16/10] rounded-2xl object-cover"
               />
               <div className="mt-5 flex items-center gap-3">
-                <Badge variant="secondary">{post.category}</Badge>
+                <Badge variant="secondary">{labels.categories[post.category]}</Badge>
                 <span className="inline-flex items-center gap-1 text-xs text-muted-foreground">
                   <Clock className="size-3" />
                   {post.readTime}
@@ -44,7 +56,7 @@ export function LatestBlogSection() {
                 href={`/blog/${post.slug}`}
                 className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-primary"
               >
-                Read article <ArrowRight className="size-4" />
+                {labels.read} <ArrowRight className="size-4" />
               </Link>
             </article>
           </SpotlightCard>

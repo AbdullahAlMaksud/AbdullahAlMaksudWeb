@@ -1,0 +1,148 @@
+{
+  "meta": {
+    "title": "ড্যাশবোর্ড"
+  },
+  "shell": {
+    "navigation": "ড্যাশবোর্ড ন্যাভিগেশন",
+    "viewProfile": "প্রোফাইল দেখুন"
+  },
+  "nav": {
+    "overview": "ওভারভিউ",
+    "projects": "প্রজেক্ট",
+    "blog": "ব্লগ পোস্ট",
+    "books": "বই",
+    "analytics": "অ্যানালিটিক্স",
+    "messages": "মেসেজ",
+    "settings": "সেটিংস"
+  },
+  "topbar": {
+    "openSidebar": "সাইডবার খুলুন",
+    "search": "সবকিছু খুঁজুন...",
+    "notifications": "নোটিফিকেশন",
+    "newCount": "{{count}} নতুন",
+    "admin": "পোর্টফোলিও অ্যাডমিন",
+    "profile": "প্রোফাইল",
+    "settings": "সেটিংস",
+    "signOut": "মক সাইন আউট"
+  },
+  "overview": {
+    "title": "শুভ সন্ধ্যা, {{name}}!",
+    "description": "আপনার পোর্টফোলিওতে যা ঘটছে।",
+    "chartTitle": "ভিউ"
+  },
+  "cards": {
+    "activity": "সাম্প্রতিক কার্যক্রম",
+    "messages": "মেসেজ",
+    "topReferrers": "টপ রেফারার",
+    "quickActions": "কুইক অ্যাকশন"
+  },
+  "analytics": {
+    "title": "অ্যানালিটিক্স",
+    "description": "traffic, reading, এবং conversion signal-এর জন্য mock portfolio analytics।",
+    "chartTitle": "Traffic ও reading trend",
+    "range": "শেষ ৩০ দিন"
+  },
+  "projects": {
+    "title": "প্রজেক্ট",
+    "description": "portfolio project, stack label, এবং publishing status ম্যানেজ করুন।",
+    "new": "নতুন প্রজেক্ট"
+  },
+  "blog": {
+    "title": "ব্লগ পোস্ট",
+    "description": "প্রকাশিত ও আসন্ন লেখার জন্য একটি mock editorial list।",
+    "new": "ব্লগ লিখুন"
+  },
+  "books": {
+    "title": "বই",
+    "description": "long-form publishing project ও reading progress ট্র্যাক করুন।",
+    "new": "বই যোগ করুন"
+  },
+  "messages": {
+    "title": "মেসেজ",
+    "description": "collaboration ও reader note-এর জন্য frontend-only inbox।",
+    "empty": "ইনবক্স খালি",
+    "emptyDescription": "নতুন collaboration message এখানে দেখাবে।",
+    "unread": "অপঠিত"
+  },
+  "settings": {
+    "title": "সেটিংস",
+    "description": "profile, preference, এবং publishing default-এর জন্য frontend-only control।",
+    "profile": "প্রোফাইল",
+    "profileDescription": "portfolio owner-এর জন্য mock profile field।",
+    "name": "নাম",
+    "email": "ইমেইল",
+    "bio": "বায়ো",
+    "bioValue": "পলিশড developer experience বানানো frontend engineer ও writer।",
+    "save": "মক সেটিংস সেভ",
+    "preferences": "প্রেফারেন্স",
+    "emailNotifications": "ইমেইল নোটিফিকেশন",
+    "weeklyDigest": "সাপ্তাহিক analytics digest",
+    "draftReminders": "Draft reminder",
+    "reducedMotion": "Reduced motion preview"
+  },
+  "forms": {
+    "project": {
+      "title": "প্রজেক্ট যোগ করুন",
+      "description": "পরে projects API-তে পাঠানোর payload এখানে তৈরি হবে।",
+      "submit": "মক প্রজেক্ট সেভ",
+      "toast": "প্রজেক্ট draft frontend form-এ ধরা হয়েছে।",
+      "titleField": "প্রজেক্ট টাইটেল",
+      "slug": "Slug",
+      "category": "ক্যাটাগরি",
+      "status": "স্ট্যাটাস",
+      "year": "বছর",
+      "image": "Image URL",
+      "stack": "স্ট্যাক",
+      "descriptionField": "বর্ণনা",
+      "demo": "Demo URL",
+      "repo": "Repository URL"
+    },
+    "blog": {
+      "title": "ব্লগ পোস্ট যোগ করুন",
+      "description": "ভবিষ্যৎ content API-এর জন্য blog post payload draft করুন।",
+      "submit": "মক ব্লগ সেভ",
+      "toast": "ব্লগ draft frontend form-এ ধরা হয়েছে।",
+      "titleField": "পোস্ট টাইটেল",
+      "slug": "Slug",
+      "category": "ক্যাটাগরি",
+      "date": "প্রকাশের তারিখ",
+      "readTime": "Read time",
+      "image": "Image URL",
+      "tags": "ট্যাগ",
+      "excerpt": "Excerpt",
+      "content": "Content notes"
+    },
+    "book": {
+      "title": "বই যোগ করুন",
+      "description": "ভবিষ্যৎ library API-এর জন্য book record প্রস্তুত করুন।",
+      "submit": "মক বই সেভ",
+      "toast": "বই draft frontend form-এ ধরা হয়েছে।",
+      "titleField": "বইয়ের টাইটেল",
+      "subtitle": "সাবটাইটেল",
+      "status": "স্ট্যাটাস",
+      "progress": "প্রগ্রেস",
+      "cover": "Cover URL",
+      "tags": "ট্যাগ",
+      "summary": "Summary"
+    }
+  },
+  "table": {
+    "project": "প্রজেক্ট",
+    "post": "পোস্ট",
+    "book": "বই",
+    "status": "স্ট্যাটাস",
+    "year": "বছর",
+    "stack": "স্ট্যাক",
+    "category": "ক্যাটাগরি",
+    "date": "তারিখ",
+    "tags": "ট্যাগ",
+    "progress": "প্রগ্রেস"
+  },
+  "actions": {
+    "newProject": "নতুন প্রজেক্ট",
+    "writeBlog": "ব্লগ লিখুন",
+    "addBook": "বই যোগ করুন",
+    "newIdea": "নতুন আইডিয়া",
+    "mock": "{{label}} একটি frontend mock action।"
+  }
+}

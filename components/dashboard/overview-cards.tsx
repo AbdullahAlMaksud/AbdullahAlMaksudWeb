@@ -1,8 +1,8 @@
 import { BookOpen, FolderKanban, Mail, Newspaper } from "lucide-react"
 
 import { SpotlightCard } from "@/components/common/spotlight-card"
-import { dashboardStats } from "@/constants/mock-data"
 import { cn } from "@/lib/utils"
+import type { DashboardStat } from "@/types/content"
 
 const icons = [FolderKanban, Newspaper, BookOpen, Mail]
 const tones = {
@@ -12,10 +12,10 @@ const tones = {
   rose: "bg-rose-500/10 text-rose-600 dark:text-rose-300",
 }
 
-export function OverviewCards() {
+export function OverviewCards({ stats }: { stats: DashboardStat[] }) {
   return (
     <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-      {dashboardStats.map((stat, index) => {
+      {stats.map((stat, index) => {
         const Icon = icons[index]
         return (
           <SpotlightCard key={stat.label}>

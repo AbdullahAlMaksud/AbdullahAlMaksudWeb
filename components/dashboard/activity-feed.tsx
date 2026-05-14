@@ -1,8 +1,8 @@
 import { CircleDot } from "lucide-react"
 
 import { SpotlightCard } from "@/components/common/spotlight-card"
-import { activities } from "@/constants/mock-data"
 import { cn } from "@/lib/utils"
+import type { ActivityItem } from "@/types/content"
 
 const tones = {
   violet: "text-primary",
@@ -11,11 +11,17 @@ const tones = {
   rose: "text-rose-500",
 }
 
-export function ActivityFeed() {
+export function ActivityFeed({
+  activities,
+  title,
+}: {
+  activities: ActivityItem[]
+  title: string
+}) {
   return (
     <SpotlightCard>
       <div className="p-5">
-        <h3 className="font-semibold">Recent Activity</h3>
+        <h3 className="font-semibold">{title}</h3>
         <div className="mt-5 space-y-4">
           {activities.map((item) => (
             <div key={item.id} className="flex gap-3">

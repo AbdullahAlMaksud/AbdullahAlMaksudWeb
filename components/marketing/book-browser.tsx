@@ -17,10 +17,22 @@ import {
   SheetTitle,
   SheetDescription,
 } from "@/components/ui/sheet"
-import { books } from "@/constants/mock-data"
 import type { Book } from "@/types/content"
 
-export function BookBrowser() {
+export function BookBrowser({
+  books,
+  labels,
+}: {
+  books: Book[]
+  labels: {
+    search: string
+    emptyTitle: string
+    emptyDescription: string
+    details: string
+    completeTemplate: string
+    status: Record<Book["status"], string>
+  }
+}) {
   const [query, setQuery] = React.useState("")
   const [selected, setSelected] = React.useState<Book | null>(null)
   const filtered = books.filter((book) => {
@@ -35,14 +47,14 @@ export function BookBrowser() {
         <Input
           value={query}
           onChange={(event) => setQuery(event.target.value)}
-          placeholder="Search books..."
+          placeholder={labels.search}
           className="h-11 rounded-xl pl-10"
         />
       </div>
       {filtered.length === 0 ? (
         <EmptyState
-          title="No books found"
-          description="Try another title, tag, or status."
+          title={labels.emptyTitle}
+          description={labels.emptyDescription}
           icon={BookOpen}
         />
       ) : (
@@ -59,7 +71,7 @@ export function BookBrowser() {
                 />
                 <div className="mt-5 flex items-center justify-between gap-3">
                   <h3 className="text-xl font-semibold">{book.title}</h3>
-                  <Badge variant="secondary">{book.status}</Badge>
+                  <Badge variant="secondary">{labels.status[book.status]}</Badge>
                 </div>
                 <p className="mt-2 text-sm leading-6 text-muted-foreground">
                   {book.subtitle}
@@ -76,7 +88,7 @@ export function BookBrowser() {
                   className="mt-5 w-full rounded-xl"
                   onClick={() => setSelected(book)}
                 >
-                  View details
+                  {labels.details}
                 </Button>
               </div>
             </SpotlightCard>
@@ -104,7 +116,7 @@ export function BookBrowser() {
                 </p>
                 <Progress value={selected.progress} className="mt-5" />
                 <p className="mt-2 text-sm text-muted-foreground">
-                  {selected.progress}% complete
+                  {formatComplete(labels.completeTemplate, selected.progress)}
                 </p>
               </div>
             </>
@@ -113,4 +125,8 @@ export function BookBrowser() {
       </Sheet>
     </div>
   )
+}
+
+function formatComplete(template: string, value: number) {
+  return template.replace("{value}", String(value))
 }

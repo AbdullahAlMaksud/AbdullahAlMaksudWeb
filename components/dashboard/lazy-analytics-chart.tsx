@@ -3,6 +3,7 @@
 import dynamic from "next/dynamic"
 
 import { SpotlightCard } from "@/components/common/spotlight-card"
+import type { ChartPoint } from "@/types/content"
 
 const Chart = dynamic(
   () => import("@/components/dashboard/analytics-chart").then((mod) => mod.AnalyticsChart),
@@ -22,6 +23,15 @@ const Chart = dynamic(
   }
 )
 
-export function LazyAnalyticsChart({ title }: { title?: string }) {
-  return <Chart title={title} />
+export function LazyAnalyticsChart({
+  data,
+  labels,
+}: {
+  data: ChartPoint[]
+  labels: {
+    title: string
+    range: string
+  }
+}) {
+  return <Chart data={data} labels={labels} />
 }

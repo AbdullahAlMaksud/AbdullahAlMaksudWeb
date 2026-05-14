@@ -10,18 +10,31 @@ import { SpotlightCard } from "@/components/common/spotlight-card"
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { blogPosts } from "@/constants/mock-data"
-import type { BlogCategory } from "@/types/content"
+import type { BlogCategory, BlogPost } from "@/types/content"
 
-const categories: BlogCategory[] = ["All", "Engineering", "Writing", "Design"]
+const categories: BlogCategory[] = ["all", "engineering", "writing", "design"]
 
-export function BlogBrowser() {
-  const [category, setCategory] = React.useState<BlogCategory>("All")
+export function BlogBrowser({
+  blogPosts,
+  labels,
+}: {
+  blogPosts: BlogPost[]
+  labels: {
+    categories: Record<BlogCategory, string>
+    search: string
+    featured: string
+    readFeatured: string
+    readMore: string
+    emptyTitle: string
+    emptyDescription: string
+  }
+}) {
+  const [category, setCategory] = React.useState<BlogCategory>("all")
   const [query, setQuery] = React.useState("")
   const featured = blogPosts.find((post) => post.featured) ?? blogPosts[0]
 
   const filtered = blogPosts.filter((post) => {
-    const matchesCategory = category === "All" || post.category === category
+    const matchesCategory = category === "all" || post.category === category
     const haystack = `${post.title} ${post.excerpt} ${post.tags.join(" ")}`
     return matchesCategory && haystack.toLowerCase().includes(query.toLowerCase())
   })
@@ -38,7 +51,7 @@ export function BlogBrowser() {
             className="aspect-[16/10] rounded-2xl object-cover"
           />
           <div className="p-1">
-            <Badge className="rounded-full">Featured Article</Badge>
+            <Badge className="rounded-full">{labels.featured}</Badge>
             <h2 className="mt-4 text-3xl font-semibold tracking-tight">
               {featured.title}
             </h2>
@@ -56,7 +69,7 @@ export function BlogBrowser() {
               href={`/blog/${featured.slug}`}
               className="mt-6 inline-flex items-center gap-2 font-semibold text-primary"
             >
-              Read featured essay <ArrowRight className="size-4" />
+              {labels.readFeatured} <ArrowRight className="size-4" />
             </Link>
           </div>
         </article>
@@ -67,7 +80,7 @@ export function BlogBrowser() {
           <TabsList className="w-full overflow-x-auto rounded-xl bg-muted/70 p-1 lg:w-fit">
             {categories.map((item) => (
               <TabsTrigger key={item} value={item} className="min-w-24">
-                {item}
+                {labels.categories[item]}
               </TabsTrigger>
             ))}
           </TabsList>
@@ -77,14 +90,14 @@ export function BlogBrowser() {
           <Input
             value={query}
             onChange={(event) => setQuery(event.target.value)}
-            placeholder="Search writing..."
+            placeholder={labels.search}
             className="h-11 rounded-xl pl-10"
           />
         </div>
       </div>
 
       {filtered.length === 0 ? (
-        <EmptyState title="No posts found" description="Try another topic." />
+        <EmptyState title={labels.emptyTitle} description={labels.emptyDescription} />
       ) : (
         <div className="grid gap-5 md:grid-cols-3">
           {filtered.map((post) => (
@@ -98,7 +111,7 @@ export function BlogBrowser() {
                   className="aspect-[16/10] rounded-2xl object-cover"
                 />
                 <Badge variant="secondary" className="mt-5">
-                  {post.category}
+                  {labels.categories[post.category]}
                 </Badge>
                 <h3 className="mt-3 text-xl font-semibold leading-tight">
                   {post.title}
@@ -110,7 +123,7 @@ export function BlogBrowser() {
                   href={`/blog/${post.slug}`}
                   className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-primary"
                 >
-                  Read more <ArrowRight className="size-4" />
+                  {labels.readMore} <ArrowRight className="size-4" />
                 </Link>
               </article>
             </SpotlightCard>

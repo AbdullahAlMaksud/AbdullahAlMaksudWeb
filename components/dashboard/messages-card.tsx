@@ -1,17 +1,24 @@
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import { SpotlightCard } from "@/components/common/spotlight-card"
-import { messages } from "@/constants/mock-data"
+import type { Message } from "@/types/content"
 
-export function MessagesCard() {
-  const unread = messages.filter((message) => message.unread).length
-
+export function MessagesCard({
+  labels,
+  messages,
+}: {
+  labels: {
+    title: string
+    newCount: string
+  }
+  messages: Message[]
+}) {
   return (
     <SpotlightCard>
       <div className="p-5">
         <div className="flex items-center justify-between">
-          <h3 className="font-semibold">Messages</h3>
-          <Badge variant="secondary">{unread} new</Badge>
+          <h3 className="font-semibold">{labels.title}</h3>
+          <Badge variant="secondary">{labels.newCount}</Badge>
         </div>
         <div className="mt-5 space-y-4">
           {messages.map((message) => (

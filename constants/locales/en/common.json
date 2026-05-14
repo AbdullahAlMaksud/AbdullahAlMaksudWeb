@@ -1,0 +1,43 @@
+{
+  "language": {
+    "label": "Language",
+    "en": "English",
+    "bn": "বাংলা",
+    "switch": "Switch language"
+  },
+  "theme": {
+    "label": "Theme",
+    "toggle": "Toggle theme",
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System"
+  },
+  "nav": {
+    "contact": "Contact Me",
+    "openMenu": "Open menu",
+    "openDashboard": "Open Dashboard"
+  },
+  "command": {
+    "placeholder": "Search pages, projects, and actions...",
+    "empty": "No command found.",
+    "shortcut": "Enter",
+    "groups": {
+      "portfolio": "Portfolio",
+      "dashboard": "Dashboard"
+    },
+    "routes": {
+      "home": "Home",
+      "projects": "Projects",
+      "blog": "Blog",
+      "books": "Books",
+      "about": "About",
+      "dashboard": "Dashboard",
+      "analytics": "Analytics",
+      "messages": "Messages",
+      "settings": "Settings"
+    }
+  },
+  "meta": {
+    "blogPost": "Blog Post"
+  }
+}

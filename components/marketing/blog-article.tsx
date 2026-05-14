@@ -5,11 +5,21 @@ import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
 import type { BlogPost } from "@/types/content"
 
-export function BlogArticle({ post }: { post: BlogPost }) {
+export function BlogArticle({
+  category,
+  labels,
+  post,
+}: {
+  category: string
+  labels: {
+    toc: string
+  }
+  post: BlogPost
+}) {
   return (
     <article className="mx-auto grid max-w-7xl gap-10 px-4 py-12 lg:grid-cols-[1fr_280px]">
       <div className="min-w-0">
-        <Badge className="rounded-full">{post.category}</Badge>
+        <Badge className="rounded-full">{category}</Badge>
         <h1 className="mt-5 max-w-4xl text-4xl font-semibold tracking-tight text-balance md:text-6xl">
           {post.title}
         </h1>
@@ -51,7 +61,7 @@ export function BlogArticle({ post }: { post: BlogPost }) {
       </div>
       <aside className="hidden lg:block">
         <div className="sticky top-28 rounded-2xl border bg-card/70 p-5 backdrop-blur">
-          <p className="text-sm font-semibold">Table of contents</p>
+          <p className="text-sm font-semibold">{labels.toc}</p>
           <Separator className="my-4" />
           <nav className="grid gap-3">
             {post.content.map((section) => (

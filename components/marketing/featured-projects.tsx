@@ -7,19 +7,32 @@ import { SectionHeading } from "@/components/common/section-heading"
 import { SpotlightCard } from "@/components/common/spotlight-card"
 import { Badge } from "@/components/ui/badge"
 import { buttonVariants } from "@/components/ui/button"
-import { projects } from "@/constants/mock-data"
+import type { Project } from "@/types/content"
 
-export function FeaturedProjects() {
+export function FeaturedProjects({
+  labels,
+  projects,
+}: {
+  labels: {
+    eyebrow: string
+    title: string
+    description: string
+    all: string
+    project: string
+    categories: Record<Project["category"], string>
+  }
+  projects: Project[]
+}) {
   return (
     <MotionSection className="mx-auto max-w-7xl px-4 py-16">
       <div className="mb-8 flex flex-col justify-between gap-4 md:flex-row md:items-end">
         <SectionHeading
-          eyebrow="Featured Projects"
-          title="Selected interfaces with product thinking baked in."
-          description="Frontend systems, editorial tooling, and dashboard experiences built with a reusable component mindset."
+          eyebrow={labels.eyebrow}
+          title={labels.title}
+          description={labels.description}
         />
         <Link href="/projects" className={buttonVariants({ variant: "outline" })}>
-          View all
+          {labels.all}
           <ArrowRight className="size-4" />
         </Link>
       </div>
@@ -36,7 +49,7 @@ export function FeaturedProjects() {
               />
               <div className="flex flex-col justify-between gap-5">
                 <div>
-                  <Badge variant="secondary">{project.category}</Badge>
+                  <Badge variant="secondary">{labels.categories[project.category]}</Badge>
                   <h3 className="mt-4 text-2xl font-semibold">
                     {project.title}
                   </h3>
@@ -58,7 +71,7 @@ export function FeaturedProjects() {
                   href={project.links.demo}
                   className="inline-flex items-center gap-2 text-sm font-semibold text-primary"
                 >
-                  View project <ExternalLink className="size-4" />
+                  {labels.project} <ExternalLink className="size-4" />
                 </Link>
               </div>
             </div>

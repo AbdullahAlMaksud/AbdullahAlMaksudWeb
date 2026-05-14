@@ -1,0 +1,43 @@
+{
+  "language": {
+    "label": "ভাষা",
+    "en": "English",
+    "bn": "বাংলা",
+    "switch": "ভাষা বদলান"
+  },
+  "theme": {
+    "label": "থিম",
+    "toggle": "থিম বদলান",
+    "light": "লাইট",
+    "dark": "ডার্ক",
+    "system": "সিস্টেম"
+  },
+  "nav": {
+    "contact": "যোগাযোগ",
+    "openMenu": "মেনু খুলুন",
+    "openDashboard": "ড্যাশবোর্ড খুলুন"
+  },
+  "command": {
+    "placeholder": "পৃষ্ঠা, প্রজেক্ট, ও অ্যাকশন খুঁজুন...",
+    "empty": "কোনো কমান্ড পাওয়া যায়নি।",
+    "shortcut": "Enter",
+    "groups": {
+      "portfolio": "পোর্টফোলিও",
+      "dashboard": "ড্যাশবোর্ড"
+    },
+    "routes": {
+      "home": "হোম",
+      "projects": "প্রজেক্ট",
+      "blog": "ব্লগ",
+      "books": "বই",
+      "about": "সম্পর্কে",
+      "dashboard": "ড্যাশবোর্ড",
+      "analytics": "অ্যানালিটিক্স",
+      "messages": "মেসেজ",
+      "settings": "সেটিংস"
+    }
+  },
+  "meta": {
+    "blogPost": "ব্লগ পোস্ট"
+  }
+}

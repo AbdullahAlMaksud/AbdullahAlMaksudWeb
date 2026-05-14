@@ -26,19 +26,38 @@ import {
 } from "@/components/ui/command"
 import { useUIStore } from "@/store/use-ui-store"
 
-const routes = [
-  { label: "Home", href: "/", icon: Home, group: "Portfolio" },
-  { label: "Projects", href: "/projects", icon: FolderKanban, group: "Portfolio" },
-  { label: "Blog", href: "/blog", icon: Newspaper, group: "Portfolio" },
-  { label: "Books", href: "/books", icon: BookOpen, group: "Portfolio" },
-  { label: "About", href: "/about", icon: UserRound, group: "Portfolio" },
-  { label: "Dashboard", href: "/dashboard", icon: BarChart3, group: "Dashboard" },
-  { label: "Analytics", href: "/dashboard/analytics", icon: BarChart3, group: "Dashboard" },
-  { label: "Messages", href: "/dashboard/messages", icon: Mail, group: "Dashboard" },
-  { label: "Settings", href: "/dashboard/settings", icon: Settings, group: "Dashboard" },
-]
+export type CommandPaletteLabels = {
+  placeholder: string
+  empty: string
+  shortcut: string
+  groups: Record<"portfolio" | "dashboard", string>
+  routes: Record<
+    | "home"
+    | "projects"
+    | "blog"
+    | "books"
+    | "about"
+    | "dashboard"
+    | "analytics"
+    | "messages"
+    | "settings",
+    string
+  >
+}
 
-export function CommandPalette() {
+const routes = [
+  { key: "home", href: "/", icon: Home, group: "portfolio" },
+  { key: "projects", href: "/projects", icon: FolderKanban, group: "portfolio" },
+  { key: "blog", href: "/blog", icon: Newspaper, group: "portfolio" },
+  { key: "books", href: "/books", icon: BookOpen, group: "portfolio" },
+  { key: "about", href: "/about", icon: UserRound, group: "portfolio" },
+  { key: "dashboard", href: "/dashboard", icon: BarChart3, group: "dashboard" },
+  { key: "analytics", href: "/dashboard/analytics", icon: BarChart3, group: "dashboard" },
+  { key: "messages", href: "/dashboard/messages", icon: Mail, group: "dashboard" },
+  { key: "settings", href: "/dashboard/settings", icon: Settings, group: "dashboard" },
+] as const
+
+export function CommandPalette({ labels }: { labels: CommandPaletteLabels }) {
   const router = useRouter()
   const open = useUIStore((state) => state.commandOpen)
   const setOpen = useUIStore((state) => state.setCommandOpen)
@@ -63,24 +82,24 @@ export function CommandPalette() {
   return (
     <CommandDialog open={open} onOpenChange={setOpen} className="sm:max-w-xl">
       <Command>
-        <CommandInput placeholder="Search pages, projects, and actions..." />
+        <CommandInput placeholder={labels.placeholder} />
         <CommandList>
-          <CommandEmpty>No command found.</CommandEmpty>
-          {["Portfolio", "Dashboard"].map((group) => (
-            <CommandGroup key={group} heading={group}>
+          <CommandEmpty>{labels.empty}</CommandEmpty>
+          {(["portfolio", "dashboard"] as const).map((group) => (
+            <CommandGroup key={group} heading={labels.groups[group]}>
               {routes
                 .filter((route) => route.group === group)
                 .map((route) => (
                   <CommandItem
                     key={route.href}
-                    value={route.label}
+                    value={labels.routes[route.key]}
                     onSelect={() => runCommand(route.href)}
                   >
                     <route.icon className="size-4" />
-                    {route.label}
+                    {labels.routes[route.key]}
                     <CommandShortcut>
                       <Keyboard className="mr-1 inline size-3" />
-                      Enter
+                      {labels.shortcut}
                     </CommandShortcut>
                   </CommandItem>
                 ))}

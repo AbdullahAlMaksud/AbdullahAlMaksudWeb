@@ -6,22 +6,29 @@ import { SpotlightCard } from "@/components/common/spotlight-card"
 import { PageHero } from "@/components/marketing/page-hero"
 import { Button, buttonVariants } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
-import { experience, siteConfig, skillGroups } from "@/constants/site"
+import { getSiteData } from "@/lib/data"
+import { getI18n, getRequestLocale } from "@/lib/i18n/server"
 
-export function AboutScreen() {
+export async function AboutScreen() {
+  const locale = await getRequestLocale()
+  const [{ experience, siteConfig, skillGroups }, { t }] = await Promise.all([
+    getSiteData(locale),
+    getI18n(locale, "marketing"),
+  ])
+
   return (
     <>
       <PageHero
-        eyebrow="About"
-        title="A frontend engineer who writes to make systems easier to understand."
-        description="I care about interfaces that are elegant under pressure: clear hierarchy, reliable components, measured motion, and writing that helps teams think."
+        eyebrow={t("pages.about.eyebrow")}
+        title={t("pages.about.hero")}
+        description={t("pages.about.description")}
       />
       <main className="mx-auto grid max-w-7xl gap-6 px-4 pb-20 lg:grid-cols-[0.9fr_1.1fr]">
         <SpotlightCard>
           <div className="p-6">
             <SectionHeading
-              title="Biography"
-              description="My work sits at the intersection of frontend engineering, writing, and product design. I build UI foundations, write practical essays, and help teams turn fuzzy ideas into durable systems."
+              title={t("about.bioTitle")}
+              description={t("about.bio")}
             />
             <Separator className="my-6" />
             <div className="flex flex-wrap gap-3">
@@ -44,7 +51,7 @@ export function AboutScreen() {
                 className={buttonVariants({ className: "rounded-xl" })}
               >
                 <Mail className="size-4" />
-                Email
+                {t("about.email")}
               </Link>
             </div>
           </div>
@@ -52,7 +59,7 @@ export function AboutScreen() {
         <div className="grid gap-6">
           <SpotlightCard>
             <div className="p-6">
-              <h2 className="text-2xl font-semibold">Skills</h2>
+              <h2 className="text-2xl font-semibold">{t("about.skills")}</h2>
               <div className="mt-5 grid gap-4 md:grid-cols-3">
                 {skillGroups.map((group) => (
                   <div key={group.title} className="rounded-2xl bg-muted/50 p-4">
@@ -69,7 +76,7 @@ export function AboutScreen() {
           </SpotlightCard>
           <SpotlightCard>
             <div className="p-6">
-              <h2 className="text-2xl font-semibold">Timeline</h2>
+              <h2 className="text-2xl font-semibold">{t("about.timeline")}</h2>
               <div className="mt-6 space-y-5">
                 {experience.map((item) => (
                   <div key={item.year} className="rounded-2xl bg-muted/40 p-4">
@@ -83,13 +90,13 @@ export function AboutScreen() {
           </SpotlightCard>
           <SpotlightCard>
             <div id="contact" className="p-6">
-              <h2 className="text-2xl font-semibold">Resume</h2>
+              <h2 className="text-2xl font-semibold">{t("about.resume")}</h2>
               <p className="mt-3 text-sm leading-6 text-muted-foreground">
-                A concise snapshot of recent projects, writing, and frontend systems work.
+                {t("about.resumeDescription")}
               </p>
               <Button className="mt-5 rounded-xl">
                 <Download className="size-4" />
-                Download Resume
+                {t("about.downloadResume")}
               </Button>
             </div>
           </SpotlightCard>

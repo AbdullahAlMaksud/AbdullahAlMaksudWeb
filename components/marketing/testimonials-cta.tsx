@@ -5,14 +5,28 @@ import { MotionSection } from "@/components/common/motion-section"
 import { SectionHeading } from "@/components/common/section-heading"
 import { SpotlightCard } from "@/components/common/spotlight-card"
 import { buttonVariants } from "@/components/ui/button"
-import { siteConfig, testimonials } from "@/constants/site"
+import type { SiteConfig, Testimonial } from "@/types/content"
 
-export function TestimonialsCTA() {
+export function TestimonialsCTA({
+  labels,
+  site,
+  testimonials,
+}: {
+  labels: {
+    eyebrow: string
+    title: string
+    contact: string
+    ctaTitle: string
+    start: string
+  }
+  site: SiteConfig
+  testimonials: Testimonial[]
+}) {
   return (
     <MotionSection className="mx-auto max-w-7xl px-4 py-16">
       <SectionHeading
-        eyebrow="Testimonials"
-        title="A calm partner for ambitious product work."
+        eyebrow={labels.eyebrow}
+        title={labels.title}
       />
       <div className="mt-8 grid gap-5 md:grid-cols-3">
         {testimonials.map((item) => (
@@ -37,21 +51,21 @@ export function TestimonialsCTA() {
         <div className="flex flex-col justify-between gap-6 md:flex-row md:items-center">
           <div>
             <p className="text-sm font-medium uppercase tracking-[0.22em] text-primary">
-              Contact
+              {labels.contact}
             </p>
             <h2 className="mt-3 text-3xl font-semibold tracking-tight text-balance">
-              Have a product, article, or interface system in mind?
+              {labels.ctaTitle}
             </h2>
-            <p className="mt-3 text-muted-foreground">{siteConfig.email}</p>
+            <p className="mt-3 text-muted-foreground">{site.email}</p>
           </div>
           <Link
-            href={`mailto:${siteConfig.email}`}
+            href={`mailto:${site.email}`}
             className={buttonVariants({
               size: "lg",
               className: "h-12 rounded-xl px-6",
             })}
           >
-            Start a conversation
+            {labels.start}
             <ArrowRight className="size-4" />
           </Link>
         </div>

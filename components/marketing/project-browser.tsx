@@ -11,17 +11,30 @@ import { Badge } from "@/components/ui/badge"
 import { buttonVariants } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { projects } from "@/constants/mock-data"
-import type { ProjectCategory } from "@/types/content"
+import type { Project, ProjectCategory } from "@/types/content"
 
-const categories: ProjectCategory[] = ["All", "SaaS", "Writing", "AI", "Motion"]
+const categories: ProjectCategory[] = ["all", "saas", "writing", "ai", "motion"]
 
-export function ProjectBrowser() {
-  const [category, setCategory] = React.useState<ProjectCategory>("All")
+export function ProjectBrowser({
+  labels,
+  projects,
+}: {
+  labels: {
+    categories: Record<ProjectCategory, string>
+    status: Record<Project["status"], string>
+    search: string
+    emptyTitle: string
+    emptyDescription: string
+    demo: string
+    code: string
+  }
+  projects: Project[]
+}) {
+  const [category, setCategory] = React.useState<ProjectCategory>("all")
   const [query, setQuery] = React.useState("")
 
   const filtered = projects.filter((project) => {
-    const matchesCategory = category === "All" || project.category === category
+    const matchesCategory = category === "all" || project.category === category
     const haystack = `${project.title} ${project.description} ${project.stack.join(" ")}`
     return matchesCategory && haystack.toLowerCase().includes(query.toLowerCase())
   })
@@ -33,7 +46,7 @@ export function ProjectBrowser() {
           <TabsList className="w-full overflow-x-auto rounded-xl bg-muted/70 p-1 lg:w-fit">
             {categories.map((item) => (
               <TabsTrigger key={item} value={item} className="min-w-20">
-                {item}
+                {labels.categories[item]}
               </TabsTrigger>
             ))}
           </TabsList>
@@ -43,15 +56,15 @@ export function ProjectBrowser() {
           <Input
             value={query}
             onChange={(event) => setQuery(event.target.value)}
-            placeholder="Search projects..."
+            placeholder={labels.search}
             className="h-11 rounded-xl pl-10"
           />
         </div>
       </div>
       {filtered.length === 0 ? (
         <EmptyState
-          title="No projects found"
-          description="Try another category or search phrase."
+          title={labels.emptyTitle}
+          description={labels.emptyDescription}
         />
       ) : (
         <div className="grid gap-5 md:grid-cols-2">
@@ -67,7 +80,7 @@ export function ProjectBrowser() {
                 />
                 <div className="mt-5 flex items-center justify-between gap-3">
                   <div>
-                    <Badge variant="secondary">{project.status}</Badge>
+                    <Badge variant="secondary">{labels.status[project.status]}</Badge>
                     <h3 className="mt-3 text-2xl font-semibold">
                       {project.title}
                     </h3>
@@ -95,7 +108,7 @@ export function ProjectBrowser() {
                     })}
                   >
                     <ExternalLink className="size-4" />
-                    Demo
+                    {labels.demo}
                   </Link>
                   <Link
                     href={project.links.repo}
@@ -106,7 +119,7 @@ export function ProjectBrowser() {
                     })}
                   >
                     <Code2 className="size-4" />
-                    Code
+                    {labels.code}
                   </Link>
                 </div>
               </div>

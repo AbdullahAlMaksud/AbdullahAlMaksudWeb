@@ -3,16 +3,29 @@ import { CheckCircle2 } from "lucide-react"
 import { MotionSection } from "@/components/common/motion-section"
 import { SectionHeading } from "@/components/common/section-heading"
 import { SpotlightCard } from "@/components/common/spotlight-card"
-import { experience, skillGroups } from "@/constants/site"
+import type { SkillGroup, TimelineItem } from "@/types/content"
 
-export function SkillsExperience() {
+export function SkillsExperience({
+  experience,
+  labels,
+  skillGroups,
+}: {
+  experience: TimelineItem[]
+  labels: {
+    eyebrow: string
+    title: string
+    description: string
+    timeline: string
+  }
+  skillGroups: SkillGroup[]
+}) {
   return (
     <MotionSection className="mx-auto grid max-w-7xl gap-6 px-4 py-16 lg:grid-cols-2">
       <div>
         <SectionHeading
-          eyebrow="Skills"
-          title="Systems thinking with a writer's sense of clarity."
-          description="The work blends interface engineering, editorial judgment, and product instincts."
+          eyebrow={labels.eyebrow}
+          title={labels.title}
+          description={labels.description}
         />
         <div className="mt-8 grid gap-4">
           {skillGroups.map((group) => (
@@ -37,7 +50,7 @@ export function SkillsExperience() {
       </div>
       <SpotlightCard className="self-start">
         <div className="p-6">
-          <h3 className="text-2xl font-semibold">Experience Timeline</h3>
+          <h3 className="text-2xl font-semibold">{labels.timeline}</h3>
           <div className="mt-8 space-y-8">
             {experience.map((item) => (
               <div key={`${item.year}-${item.role}`} className="relative pl-8">

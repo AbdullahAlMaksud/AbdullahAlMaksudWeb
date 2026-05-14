@@ -6,16 +6,28 @@ import { MotionSection } from "@/components/common/motion-section"
 import { SectionHeading } from "@/components/common/section-heading"
 import { SpotlightCard } from "@/components/common/spotlight-card"
 import { Progress } from "@/components/ui/progress"
-import { books } from "@/constants/mock-data"
+import type { Book } from "@/types/content"
 
-export function BooksSection() {
+export function BooksSection({
+  books,
+  labels,
+}: {
+  books: Book[]
+  labels: {
+    eyebrow: string
+    title: string
+    description: string
+    browse: string
+    complete: (value: number) => string
+  }
+}) {
   return (
     <MotionSection className="mx-auto max-w-7xl px-4 py-16">
       <div className="grid gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:items-center">
         <SectionHeading
-          eyebrow="Books"
-          title="Long-form projects with a working rhythm."
-          description="Books in progress, published notes, and collections that turn scattered ideas into durable references."
+          eyebrow={labels.eyebrow}
+          title={labels.title}
+          description={labels.description}
         />
         <div className="grid gap-4 md:grid-cols-3">
           {books.map((book) => (
@@ -34,7 +46,7 @@ export function BooksSection() {
                 </p>
                 <Progress value={book.progress} className="mt-4" />
                 <p className="mt-2 text-xs text-muted-foreground">
-                  {book.progress}% complete
+                  {labels.complete(book.progress)}
                 </p>
               </div>
             </SpotlightCard>
@@ -45,7 +57,7 @@ export function BooksSection() {
         href="/books"
         className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-primary"
       >
-        Browse books <ArrowRight className="size-4" />
+        {labels.browse} <ArrowRight className="size-4" />
       </Link>
     </MotionSection>
   )
