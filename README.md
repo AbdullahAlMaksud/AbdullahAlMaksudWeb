@@ -167,7 +167,9 @@ The app uses `next-themes` for dark/light mode support. Customize colors in:
 Create a `.env.local` file (optional):
 
 ```env
-# Add any external API endpoints or configuration here
+NEXT_PUBLIC_API_URL=http://localhost:4000
+NEXT_PUBLIC_BETTER_AUTH_URL=http://localhost:4000
+BACKEND_API_URL=http://localhost:4000
 ```
 
 ## 📦 Building for Production

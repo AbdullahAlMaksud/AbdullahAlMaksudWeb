@@ -1,0 +1,81 @@
+{
+  "language": {
+    "label": "ভাষা",
+    "en": "English",
+    "bn": "বাংলা",
+    "switch": "ভাষা বদলান"
+  },
+  "theme": {
+    "label": "থিম",
+    "toggle": "থিম বদলান",
+    "light": "লাইট",
+    "sepia": "সেপিয়া",
+    "emerald": "এমারল্ড",
+    "dark": "ডার্ক",
+    "black": "ব্ল্যাক",
+    "system": "সিস্টেম"
+  },
+  "nav": {
+    "contact": "যোগাযোগ",
+    "openMenu": "মেনু খুলুন",
+    "openDashboard": "ড্যাশবোর্ড খুলুন",
+    "pin": "সাইডবার পিন করুন",
+    "unpin": "সাইডবার আনপিন করুন",
+    "fullscreen": "ফুলস্ক্রিন",
+    "exitFullscreen": "ফুলস্ক্রিন থেকে বের হন",
+    "scrollDown": "স্ক্রোল করুন"
+  },
+  "command": {
+    "placeholder": "পৃষ্ঠা, প্রজেক্ট, ও অ্যাকশন খুঁজুন...",
+    "empty": "কোনো কমান্ড পাওয়া যায়নি।",
+    "shortcut": "Enter",
+    "groups": {
+      "portfolio": "পোর্টফোলিও",
+      "dashboard": "ড্যাশবোর্ড"
+    },
+    "routes": {
+      "home": "হোম",
+      "projects": "প্রজেক্ট",
+      "blog": "ব্লগ",
+      "books": "বই",
+      "about": "সম্পর্কে",
+      "dashboard": "ড্যাশবোর্ড",
+      "analytics": "অ্যানালিটিক্স",
+      "messages": "মেসেজ",
+      "settings": "সেটিংস"
+    }
+  },
+  "auth": {
+    "backHome": "হোম",
+    "genericError": "কিছু সমস্যা হয়েছে। আবার চেষ্টা করুন।",
+    "fields": {
+      "name": "নাম",
+      "namePlaceholder": "আপনার নাম",
+      "email": "ইমেইল",
+      "emailPlaceholder": "you@example.com",
+      "password": "পাসওয়ার্ড",
+      "passwordPlaceholder": "কমপক্ষে ৮ অক্ষর"
+    },
+    "login": {
+      "title": "লগইন",
+      "description": "ড্যাশবোর্ডে ঢুকতে আপনার ইমেইল ও পাসওয়ার্ড ব্যবহার করুন।",
+      "submit": "লগইন",
+      "submitting": "লগইন হচ্ছে...",
+      "switchText": "অ্যাকাউন্ট নেই?",
+      "switchLink": "নতুন অ্যাকাউন্ট তৈরি করুন",
+      "success": "সফলভাবে লগইন হয়েছে।"
+    },
+    "signup": {
+      "title": "অ্যাকাউন্ট তৈরি করুন",
+      "description": "Better Auth email ও password authentication দিয়ে অ্যাকাউন্ট তৈরি করুন।",
+      "submit": "সাইন আপ",
+      "submitting": "অ্যাকাউন্ট তৈরি হচ্ছে...",
+      "switchText": "আগেই অ্যাকাউন্ট আছে?",
+      "switchLink": "লগইন করুন",
+      "success": "অ্যাকাউন্ট সফলভাবে তৈরি হয়েছে।"
+    }
+  },
+  "meta": {
+    "blogPost": "ব্লগ পোস্ট"
+  }
+}
