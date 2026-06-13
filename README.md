@@ -46,7 +46,7 @@ A modern, high-performance portfolio and dashboard built with cutting-edge web t
 │   │   ├── messages/         # Messages/inbox
 │   │   ├── projects/         # Projects showcase
 │   │   └── settings/         # Settings page
-│   └── (marketing)/          # Public pages
+│   └── (main)/               # Public pages
 │       ├── blog/             # Blog listing and articles
 │       ├── books/            # Books showcase
 │       ├── projects/         # Projects gallery
