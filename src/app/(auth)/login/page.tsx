@@ -32,10 +32,8 @@ export default async function LoginPage() {
         switchLink: t("auth.login.switchLink"),
         success: t("auth.login.success"),
         genericError: t("auth.genericError"),
-        ...(process.env.NEXT_PUBLIC_GOOGLE_ENABLED === "true" && {
-          googleSignIn: t("auth.googleSignIn"),
-          orDivider: t("auth.orDivider"),
-        }),
+        googleSignIn: t("auth.googleSignIn"),
+        orDivider: t("auth.orDivider"),
       }}
     />
   )

@@ -12,12 +12,7 @@ export class ApiError extends Error {
 }
 
 export function getApiBaseUrl() {
-  return (
-    process.env.BACKEND_API_URL ??
-    process.env.NEXT_PUBLIC_API_URL ??
-    process.env.NEXT_PUBLIC_BETTER_AUTH_URL ??
-    defaultApiUrl
-  ).replace(/\/$/, "")
+  return (process.env.NEXT_PUBLIC_API_URL ?? defaultApiUrl).replace(/\/$/, "")
 }
 
 export async function fetchApi<T>(
@@ -48,7 +43,10 @@ export async function fetchApi<T>(
   })
 
   if (!response.ok) {
-    throw new ApiError(`API request failed: ${response.status}`, response.status)
+    throw new ApiError(
+      `API request failed: ${response.status}`,
+      response.status
+    )
   }
 
   return response.json() as Promise<T>

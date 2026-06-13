@@ -168,8 +168,6 @@ Create a `.env.local` file (optional):
 
 ```env
 NEXT_PUBLIC_API_URL=http://localhost:4000
-NEXT_PUBLIC_BETTER_AUTH_URL=http://localhost:4000
-BACKEND_API_URL=http://localhost:4000
 ```
 
 ## 📦 Building for Production

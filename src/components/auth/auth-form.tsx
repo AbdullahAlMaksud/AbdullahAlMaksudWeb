@@ -11,10 +11,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { authClient } from "@/lib/auth-client"
 
-const apiBaseUrl =
-  process.env.NEXT_PUBLIC_API_URL ??
-  process.env.NEXT_PUBLIC_BETTER_AUTH_URL ??
-  "http://localhost:4000"
+const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL
 
 export type AuthFormLabels = {
   title: string
