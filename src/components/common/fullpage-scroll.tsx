@@ -11,6 +11,10 @@ interface FullpageScrollProps {
   className?: string
 }
 
+function isMobileViewport() {
+  return window.matchMedia("(max-width: 1023px)").matches
+}
+
 export function FullpageScroll({ children, className }: FullpageScrollProps) {
   const [current, setCurrent] = React.useState(0)
   const [isAnimating, setIsAnimating] = React.useState(false)
@@ -62,6 +66,9 @@ export function FullpageScroll({ children, className }: FullpageScrollProps) {
     const onTouchStart = (e: TouchEvent) => {
       touchStartY = e.touches[0].clientY
     }
+    const onTouchMove = (e: TouchEvent) => {
+      if (isMobileViewport()) e.preventDefault()
+    }
     const onTouchEnd = (e: TouchEvent) => {
       const now = Date.now()
       if (now - lastTouchTime < 420) return
@@ -73,9 +80,11 @@ export function FullpageScroll({ children, className }: FullpageScrollProps) {
     }
     const el = containerRef.current
     el?.addEventListener("touchstart", onTouchStart, { passive: true })
+    el?.addEventListener("touchmove", onTouchMove, { passive: false })
     el?.addEventListener("touchend", onTouchEnd, { passive: true })
     return () => {
       el?.removeEventListener("touchstart", onTouchStart)
+      el?.removeEventListener("touchmove", onTouchMove)
       el?.removeEventListener("touchend", onTouchEnd)
     }
   }, [goNext, goPrev])
@@ -116,7 +125,10 @@ export function FullpageScroll({ children, className }: FullpageScrollProps) {
   return (
     <div
       ref={containerRef}
-      className={cn("relative h-svh overflow-hidden", className)}
+      className={cn(
+        "relative h-svh overflow-hidden overscroll-y-none lg:overscroll-y-auto",
+        className
+      )}
     >
       <AnimatePresence initial={false} custom={direction}>
         <motion.div

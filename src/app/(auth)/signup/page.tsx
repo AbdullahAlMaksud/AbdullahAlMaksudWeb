@@ -32,6 +32,10 @@ export default async function SignupPage() {
         switchLink: t("auth.signup.switchLink"),
         success: t("auth.signup.success"),
         genericError: t("auth.genericError"),
+        ...(process.env.NEXT_PUBLIC_GOOGLE_ENABLED === "true" && {
+          googleSignIn: t("auth.googleSignIn"),
+          orDivider: t("auth.orDivider"),
+        }),
       }}
     />
   )

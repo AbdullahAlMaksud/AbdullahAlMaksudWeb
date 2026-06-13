@@ -48,6 +48,8 @@
   "auth": {
     "backHome": "হোম",
     "genericError": "কিছু সমস্যা হয়েছে। আবার চেষ্টা করুন।",
+    "googleSignIn": "Google দিয়ে প্রবেশ করুন",
+    "orDivider": "অথবা ইমেইল দিয়ে",
     "fields": {
       "name": "নাম",
       "namePlaceholder": "আপনার নাম",

@@ -35,7 +35,6 @@ export function HeroSection({
         className="flex flex-col items-center"
       >
         <div className="relative mb-8 h-64 w-56 overflow-hidden md:h-80 md:w-72">
-          d
           <Image
             src="/images/abdullahalmaksud/Asset%2011.svg"
             alt={labels.imageAlt}

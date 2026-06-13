@@ -11,13 +11,17 @@ import {
   type CommandPaletteLabels,
 } from "@/components/common/command-palette"
 import { CursorGlow } from "@/components/common/cursor-glow"
+import { KeyboardShortcuts } from "@/components/common/keyboard-shortcuts"
+import type { Locale } from "@/lib/i18n/resources"
 
 export function AppProviders({
   children,
   commandLabels,
+  locale,
 }: {
   children: React.ReactNode
   commandLabels: CommandPaletteLabels
+  locale: Locale
 }) {
   const [queryClient] = React.useState(
     () =>
@@ -36,6 +40,7 @@ export function AppProviders({
       <ThemeProvider>
         <TooltipProvider>
           <CursorGlow />
+          <KeyboardShortcuts locale={locale} />
           {children}
           <CommandPalette labels={commandLabels} />
           <Toaster richColors closeButton position="top-right" />

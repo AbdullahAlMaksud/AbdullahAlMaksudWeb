@@ -56,7 +56,9 @@ export default async function RootLayout({
   return (
     <html lang={locale} suppressHydrationWarning>
       <body className={cn(locale === "bn" && anekBangla.className)}>
-        <AppProviders commandLabels={commandLabels}>{children}</AppProviders>
+        <AppProviders commandLabels={commandLabels} locale={locale}>
+          {children}
+        </AppProviders>
       </body>
     </html>
   )
