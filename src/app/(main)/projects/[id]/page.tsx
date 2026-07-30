@@ -7,13 +7,12 @@ import { ProjectLivePreview } from "@/components/marketing/project-live-preview"
 import { ProjectWebviewDialog } from "@/components/marketing/project-webview-dialog"
 import { Badge } from "@/components/ui/badge"
 import { buttonVariants } from "@/components/ui/button"
-import { portfolioProjects } from "@/constants/data/projects"
 import { getI18n, getRequestLocale } from "@/lib/i18n/server"
 import { cn } from "@/lib/utils"
+import { fetchApi } from "@/lib/api"
+import type { PortfolioProject } from "@/types/content"
 
-export function generateStaticParams() {
-  return portfolioProjects.map((project) => ({ id: project.id }))
-}
+export const dynamic = "force-dynamic"
 
 export async function generateMetadata({
   params,
@@ -21,7 +20,10 @@ export async function generateMetadata({
   params: Promise<{ id: string }>
 }): Promise<Metadata> {
   const { id } = await params
-  const project = portfolioProjects.find((item) => item.id === id)
+  let project: PortfolioProject | null = null
+  try {
+    project = await fetchApi<PortfolioProject>(`/api/v1/projects/${id}`)
+  } catch (err) {}
 
   return {
     title: project?.title ?? "Project",
@@ -35,9 +37,15 @@ export default async function Page({
   params: Promise<{ id: string }>
 }) {
   const { id } = await params
-  const project = portfolioProjects.find((item) => item.id === id)
+  
+  let project: PortfolioProject | null = null
+  try {
+    project = await fetchApi<PortfolioProject>(`/api/v1/projects/${id}`)
+  } catch (error) {
+    console.error("Failed to fetch project:", error)
+  }
 
-  if (!project) {
+  if (!project || project.isArchived) {
     notFound()
   }
 

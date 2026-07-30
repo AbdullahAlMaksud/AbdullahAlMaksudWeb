@@ -1,9 +1,11 @@
 import type { ReactNode } from "react"
 
 import { VerticalNavbar } from "@/components/marketing/vertical-navbar"
-import { WavyBackground } from "@/components/marketing/wavy-background"
+import AnimatedBackground from "@/components/common/animated-background"
 import { getSiteData } from "@/lib/data"
 import { getI18n, getRequestLocale } from "@/lib/i18n/server"
+import { fetchApi } from "@/lib/api"
+import type { PortfolioProject } from "@/types/content"
 
 export default async function MarketingLayout({
   children,
@@ -16,12 +18,23 @@ export default async function MarketingLayout({
     getI18n(locale, "common"),
   ])
 
+  let projects: PortfolioProject[] = []
+  try {
+    projects = await fetchApi<PortfolioProject[]>("/api/v1/projects")
+  } catch (error) {
+    console.error("Failed to fetch projects for navbar:", error)
+  }
+
+  // Filter out archived projects for public rendering
+  const activeProjects = projects.filter((p) => !p.isArchived)
+
   return (
     <div className="relative isolate min-h-svh overflow-hidden">
-      <WavyBackground intensity="medium" speed="slow" />
+      <AnimatedBackground />
       <VerticalNavbar
         locale={locale}
         nav={marketingNav}
+        projects={activeProjects}
         labels={{
           pin: t("nav.pin"),
           unpin: t("nav.unpin"),

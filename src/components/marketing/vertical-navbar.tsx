@@ -25,8 +25,7 @@ import {
 import { useTheme } from "next-themes"
 
 import { cn } from "@/lib/utils"
-import { portfolioProjects } from "@/constants/data/projects"
-import type { NavItem } from "@/types/content"
+import type { NavItem, PortfolioProject } from "@/types/content"
 import { localeCookieName, type Locale } from "@/lib/i18n/resources"
 import {
   Tooltip,
@@ -66,10 +65,12 @@ export type VerticalNavbarLabels = {
 export function VerticalNavbar({
   locale,
   nav,
+  projects = [],
   labels,
 }: {
   locale: Locale
   nav: NavItem[]
+  projects?: PortfolioProject[]
   labels: VerticalNavbarLabels
 }) {
   const pathname = usePathname()
@@ -187,15 +188,15 @@ export function VerticalNavbar({
                     aria-hidden="true"
                     className="absolute top-1/2 left-full h-16 w-3 -translate-y-1/2"
                   />
-                  <div className="pointer-events-none absolute top-1/2 left-full ml-3 flex translate-x-2 -translate-y-1/2 items-center gap-2 rounded-2xl border border-border/70 bg-background/88 p-2 opacity-0 shadow-2xl shadow-black/10 backdrop-blur-xl transition duration-200 group-focus-within:pointer-events-auto group-focus-within:translate-x-0 group-focus-within:opacity-100 group-hover:pointer-events-auto group-hover:translate-x-0 group-hover:opacity-100">
-                    {portfolioProjects.map((project, index) => (
+                  <div className="pointer-events-none absolute top-1/2 left-full ml-3 flex translate-x-2 -translate-y-1/2 items-center gap-2 rounded-2xl glass-panel premium-border p-2 opacity-0 shadow-2xl transition duration-200 group-focus-within:pointer-events-auto group-focus-within:translate-x-0 group-focus-within:opacity-100 group-hover:pointer-events-auto group-hover:translate-x-0 group-hover:opacity-100">
+                    {projects.map((project, index) => (
                       <Link
                         key={project.id}
                         href={project.liveLink}
                         target="_blank"
                         rel="noopener noreferrer"
                         aria-label={project.title}
-                        className="relative flex size-14 translate-y-3 items-center justify-center overflow-hidden rounded-xl border border-border bg-background p-3 opacity-100 shadow-sm transition duration-300 group-focus-within:translate-y-0 group-focus-within:opacity-100 group-hover:translate-y-0 group-hover:opacity-100 hover:bg-white hover:shadow-lg"
+                        className="relative flex size-14 translate-y-3 items-center justify-center overflow-hidden rounded-xl border border-border/50 bg-background/30 p-2.5 opacity-100 shadow-sm transition duration-300 group-focus-within:translate-y-0 group-focus-within:opacity-100 group-hover:translate-y-0 group-hover:opacity-100 hover:bg-muted hover:border-border hover:shadow-lg"
                         style={{ transitionDelay: `${index * 45}ms` }}
                       >
                         <span className="relative z-10 block size-full">
@@ -208,7 +209,7 @@ export function VerticalNavbar({
                           />
                         </span>
 
-                        <span className="pointer-events-none absolute inset-0 bg-black/10" />
+                        <span className="pointer-events-none absolute inset-0 bg-black/5 dark:bg-white/5" />
                         <span className="sr-only">{project.title}</span>
                       </Link>
                     ))}
