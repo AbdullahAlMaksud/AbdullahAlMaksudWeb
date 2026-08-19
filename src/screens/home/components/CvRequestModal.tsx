@@ -55,9 +55,7 @@ export function CvRequestModal({ open, onClose }: CvRequestModalProps) {
       setState("success");
     } catch (err: unknown) {
       setState("error");
-      setErrorMsg(
-        err instanceof Error ? err.message : "Failed to send. Try again."
-      );
+      setErrorMsg(err instanceof Error ? err.message : "Failed to send. Try again.");
     }
   };
 
@@ -66,26 +64,26 @@ export function CvRequestModal({ open, onClose }: CvRequestModalProps) {
   return (
     // Backdrop
     <div
-      className="fixed inset-0 z-[200] flex items-center justify-center bg-ink/60 backdrop-blur-sm"
+      className="bg-ink/60 fixed inset-0 z-[200] flex items-center justify-center backdrop-blur-sm"
       onClick={onClose}
     >
       {/* Modal — stop propagation so clicking inside doesn't close */}
       <div
-        className="win relative w-full max-w-md mx-4 bg-cream dark:bg-[#141210] p-0 animate-in fade-in zoom-in-95 duration-150"
+        className="win bg-cream relative mx-4 w-full max-w-md p-0 duration-150 animate-in fade-in zoom-in-95 dark:bg-[#141210]"
         onClick={(e) => e.stopPropagation()}
       >
         {/* ── Title bar (retro window style) ─────────────────────── */}
-        <div className="flex items-center justify-between bg-ink dark:bg-cream px-4 py-2">
+        <div className="bg-ink dark:bg-cream flex items-center justify-between px-4 py-2">
           <div className="flex items-center gap-2">
             <Download size={13} className="text-cream dark:text-ink" />
-            <span className="font-pixel text-[10px] text-cream dark:text-ink tracking-wider">
+            <span className="font-pixel text-cream dark:text-ink text-[10px] tracking-wider">
               cv_download.exe
             </span>
           </div>
           <button
             onClick={onClose}
             aria-label="Close modal"
-            className="win w-5 h-5 flex items-center justify-center bg-orange border-orange hover:opacity-80 transition-opacity"
+            className="win bg-orange border-orange flex h-5 w-5 items-center justify-center transition-opacity hover:opacity-80"
           >
             <X size={10} className="text-cream" />
           </button>
@@ -96,19 +94,17 @@ export function CvRequestModal({ open, onClose }: CvRequestModalProps) {
           {state === "success" ? (
             // ── Success state ──
             <div className="flex flex-col items-center gap-4 py-4 text-center">
-              <div className="win w-16 h-16 flex items-center justify-center bg-green border-green">
+              <div className="win bg-green border-green flex h-16 w-16 items-center justify-center">
                 <Send size={22} className="text-cream" />
               </div>
-              <p className="font-pixel text-[13px] text-green leading-6">
-                LINK SENT!
-              </p>
-              <p className="text-[13px] text-ink/70 leading-relaxed">
+              <p className="font-pixel text-green text-[13px] leading-6">LINK SENT!</p>
+              <p className="text-ink/70 text-[13px] leading-relaxed">
                 Check your inbox —<br />
                 the CV download link is on its way.
               </p>
               <button
                 onClick={onClose}
-                className="mt-2 text-[11px] tracking-widest text-ink/50 hover:text-orange transition-colors underline underline-offset-4"
+                className="text-ink/50 hover:text-orange mt-2 text-[11px] tracking-widest underline underline-offset-4 transition-colors"
               >
                 CLOSE
               </button>
@@ -117,26 +113,24 @@ export function CvRequestModal({ open, onClose }: CvRequestModalProps) {
             // ── Form state ──
             <>
               <div className="mb-5">
-                <h3 className="font-pixel text-[14px] leading-7 mb-2">
+                <h3 className="font-pixel mb-2 text-[14px] leading-7">
                   GET MY CV
                   <span className="text-orange">.</span>
                 </h3>
-                <p className="text-[12px] text-ink/60 leading-5">
-                  Enter your email and I&apos;ll send you the download link
-                  instantly. No spam, ever.
+                <p className="text-ink/60 text-[12px] leading-5">
+                  Enter your email and I&apos;ll send you the download link instantly. No spam,
+                  ever.
                 </p>
               </div>
 
               <form onSubmit={handleSubmit} className="flex flex-col gap-4">
                 {/* Retro terminal-style input */}
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-[11px] tracking-widest text-ink/50">
+                  <label className="text-ink/50 text-[11px] tracking-widest">
                     YOUR EMAIL ADDRESS
                   </label>
-                  <div className="flex items-center border border-ink/30 bg-cream dark:bg-[#1a1816] focus-within:border-green transition-colors">
-                    <span className="px-3 text-orange text-[13px] select-none">
-                      &gt;
-                    </span>
+                  <div className="border-ink/30 bg-cream focus-within:border-green flex items-center border transition-colors dark:bg-[#1a1816]">
+                    <span className="text-orange select-none px-3 text-[13px]">&gt;</span>
                     <input
                       id="cv-email-input"
                       type="email"
@@ -145,15 +139,15 @@ export function CvRequestModal({ open, onClose }: CvRequestModalProps) {
                       onChange={(e) => setEmail(e.target.value)}
                       disabled={state === "loading"}
                       placeholder="you@example.com"
-                      className="flex-1 bg-transparent py-3 pr-4 text-[13px] outline-none placeholder:text-ink/30 disabled:opacity-50"
+                      className="placeholder:text-ink/30 flex-1 bg-transparent py-3 pr-4 text-[13px] outline-none disabled:opacity-50"
                     />
-                    <Mail size={13} className="mr-3 text-ink/30" />
+                    <Mail size={13} className="text-ink/30 mr-3" />
                   </div>
                 </div>
 
                 {/* Error message */}
                 {state === "error" && (
-                  <p className="text-[12px] text-red-500 flex items-center gap-1.5">
+                  <p className="flex items-center gap-1.5 text-[12px] text-red-500">
                     <span>⚠</span> {errorMsg}
                   </p>
                 )}
@@ -161,7 +155,7 @@ export function CvRequestModal({ open, onClose }: CvRequestModalProps) {
                 <Button
                   type="submit"
                   disabled={state === "loading"}
-                  className="bg-green hover:bg-green-dark text-cream rounded-none text-[12px] py-5 tracking-widest disabled:opacity-60"
+                  className="bg-green hover:bg-green-dark text-cream rounded-none py-5 text-[12px] tracking-widest disabled:opacity-60"
                 >
                   {state === "loading" ? (
                     <>
@@ -170,15 +164,13 @@ export function CvRequestModal({ open, onClose }: CvRequestModalProps) {
                     </>
                   ) : (
                     <>
-                      SEND ME THE LINK{" "}
-                      <Send size={13} className="ml-2" />
+                      SEND ME THE LINK <Send size={13} className="ml-2" />
                     </>
                   )}
                 </Button>
 
-                <p className="text-[11px] text-ink/40 text-center">
-                  Press <kbd className="border border-ink/20 px-1">Esc</kbd> to
-                  cancel
+                <p className="text-ink/40 text-center text-[11px]">
+                  Press <kbd className="border-ink/20 border px-1">Esc</kbd> to cancel
                 </p>
               </form>
             </>

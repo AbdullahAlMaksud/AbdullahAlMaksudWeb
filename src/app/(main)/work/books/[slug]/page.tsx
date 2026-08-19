@@ -1,9 +1,9 @@
-const page =()=>{
-    return (
-        <div>
-            <h1>Book</h1>
-        </div>
-    )
-}
+const page = () => {
+  return (
+    <div>
+      <h1>Book</h1>
+    </div>
+  );
+};
 
 export default page;

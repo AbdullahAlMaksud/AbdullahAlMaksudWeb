@@ -85,9 +85,6 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ success: true });
   } catch (error) {
     console.error("[contact] Email send error:", error);
-    return NextResponse.json(
-      { error: "Failed to send email. Please try again." },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "Failed to send email. Please try again." }, { status: 500 });
   }
 }

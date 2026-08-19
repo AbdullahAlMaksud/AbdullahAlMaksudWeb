@@ -105,7 +105,8 @@ export function CustomCursor() {
           marginLeft: isHovering ? "-4px" : "-3px",
           marginTop: isHovering ? "-4px" : "-3px",
           opacity: isVisible ? 1 : 0,
-          transition: "width 0.2s cubic-bezier(0.16, 1, 0.3, 1), height 0.2s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s, opacity 0.3s",
+          transition:
+            "width 0.2s cubic-bezier(0.16, 1, 0.3, 1), height 0.2s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s, opacity 0.3s",
           willChange: "transform",
         }}
       />

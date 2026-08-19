@@ -17,12 +17,7 @@ function noise2d(x: number, y: number) {
   const b = hash(ix + 1 + iy * 57);
   const c = hash(ix + (iy + 1) * 57);
   const d = hash(ix + 1 + (iy + 1) * 57);
-  return (
-    a +
-    (b - a) * ux +
-    (c - a) * uy +
-    (a - b - c + d) * ux * uy
-  );
+  return a + (b - a) * ux + (c - a) * uy + (a - b - c + d) * ux * uy;
 }
 
 type Props = {
@@ -54,9 +49,9 @@ export function AnimatedFractalDotGrid({
   const getColors = useCallback(() => {
     const isDark = document.documentElement.classList.contains("dark");
     return {
-      dot: isDark ? "63,93,72" : "30,28,23",       // green-dark in dark / ink in light
-      glow: isDark ? "210,87,31" : "63,93,72",      // orange in dark / green in light
-      bg: isDark ? "20,18,16" : "242,237,225",      // ink-dark in dark / cream in light
+      dot: isDark ? "63,93,72" : "30,28,23", // green-dark in dark / ink in light
+      glow: isDark ? "210,87,31" : "63,93,72", // orange in dark / green in light
+      bg: isDark ? "20,18,16" : "242,237,225", // ink-dark in dark / cream in light
     };
   }, []);
 
@@ -97,7 +92,10 @@ export function AnimatedFractalDotGrid({
           const baseY = r * spacing;
 
           // Fractal noise offset
-          const n = noise2d(baseX * noiseScale + timeRef.current, baseY * noiseScale + timeRef.current);
+          const n = noise2d(
+            baseX * noiseScale + timeRef.current,
+            baseY * noiseScale + timeRef.current
+          );
           const nx = noise2d(baseX * noiseScale + 100, baseY * noiseScale + timeRef.current * 0.7);
 
           const x = baseX + nx * 4;
@@ -109,9 +107,8 @@ export function AnimatedFractalDotGrid({
           const dist = Math.sqrt(dx * dx + dy * dy);
 
           // Wave ripple
-          const wave = dist < waveRadius
-            ? Math.cos((dist / waveRadius) * Math.PI * 0.5) * waveAmplitude
-            : 0;
+          const wave =
+            dist < waveRadius ? Math.cos((dist / waveRadius) * Math.PI * 0.5) * waveAmplitude : 0;
 
           const px = x + (dist < waveRadius ? (dx / (dist || 1)) * wave : 0);
           const py = y + (dist < waveRadius ? (dy / (dist || 1)) * wave : 0);
@@ -120,7 +117,9 @@ export function AnimatedFractalDotGrid({
           const nearCursor = dist < waveRadius;
           const sizeMult = nearCursor ? 1 + (1 - dist / waveRadius) * 1.8 : 1;
           const radius = dotSize * sizeMult;
-          const alpha = nearCursor ? 0.7 + (1 - dist / waveRadius) * 0.3 : 0.25 + Math.abs(n) * 0.25;
+          const alpha = nearCursor
+            ? 0.7 + (1 - dist / waveRadius) * 0.3
+            : 0.25 + Math.abs(n) * 0.25;
 
           // Glow near cursor
           if (nearCursor && dist < waveRadius * 0.6) {
@@ -148,7 +147,16 @@ export function AnimatedFractalDotGrid({
       window.removeEventListener("mousemove", onMove);
       window.removeEventListener("mouseleave", onLeave);
     };
-  }, [dotSize, spacing, waveRadius, waveAmplitude, glowStrength, noiseScale, noiseSpeed, getColors]);
+  }, [
+    dotSize,
+    spacing,
+    waveRadius,
+    waveAmplitude,
+    glowStrength,
+    noiseScale,
+    noiseSpeed,
+    getColors,
+  ]);
 
   return (
     <canvas

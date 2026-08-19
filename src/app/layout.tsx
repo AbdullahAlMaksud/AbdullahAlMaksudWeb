@@ -3,6 +3,7 @@ import { Plus_Jakarta_Sans, JetBrains_Mono, Caveat } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/providers/ThemeProvider";
 import { LenisProvider } from "@/providers/LenisProvider";
+import { ReactQueryProvider } from "@/providers/ReactQueryProvider";
 import { CustomCursor } from "@/components/CustomCursor";
 
 const sans = Plus_Jakarta_Sans({
@@ -88,8 +89,7 @@ export const metadata: Metadata = {
     site: "@abdullahalmaksud",
     creator: "@abdullahalmaksud",
     title: "Abdullah Al Maksud — Programmer. Writer. Designer.",
-    description:
-      "Full-stack developer, UI/UX designer, and writer from Bangladesh.",
+    description: "Full-stack developer, UI/UX designer, and writer from Bangladesh.",
     images: ["/og-image.png"],
   },
 
@@ -137,29 +137,25 @@ const jsonLd = {
     "Abdullah Al Maksud is a full-stack developer, UI/UX designer, and writer from Bangladesh who builds digital products that solve real problems.",
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className="dark" suppressHydrationWarning>
       <body
-        className={`${sans.variable} ${mono.variable} ${cursive.variable} font-sans bg-light-bg dark:bg-dark-bg text-light-text-main dark:text-dark-text-main antialiased transition-colors duration-300 selection:bg-gold selection:text-black`}
+        className={`${sans.variable} ${mono.variable} ${cursive.variable} text-light-text-main dark:text-dark-text-main bg-light-bg font-sans antialiased transition-colors duration-300 selection:bg-gold selection:text-black dark:bg-dark-bg`}
       >
         <script
           id="json-ld-person"
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        <ThemeProvider>
-          <LenisProvider>
-            <CustomCursor />
-            <div className="relative min-h-screen">
-              {children}
-            </div>
-          </LenisProvider>
-        </ThemeProvider>
+        <ReactQueryProvider>
+          <ThemeProvider>
+            <LenisProvider>
+              <CustomCursor />
+              <div className="relative min-h-screen">{children}</div>
+            </LenisProvider>
+          </ThemeProvider>
+        </ReactQueryProvider>
       </body>
     </html>
   );

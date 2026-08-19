@@ -5,8 +5,8 @@ Next.js 14 (App Router) + TypeScript + Tailwind CSS + shadcn/ui দিয়ে 
 ## চালানো
 
 ```bash
-npm install
-npm run dev
+pnpm install
+pnpm dev
 ```
 
 তারপর ব্রাউজারে `http://localhost:3000` ওপেন করো।
@@ -34,9 +34,9 @@ components.json     # shadcn config
    ```tsx
    import Image from "next/image";
    // ...
-   <div className="relative h-[380px] bg-green-dark overflow-hidden">
+   <div className="bg-green-dark relative h-[380px] overflow-hidden">
      <Image src="/your-photo.jpg" alt="Abdullah Al Maksud" fill className="object-cover" />
-   </div>
+   </div>;
    ```
    ছবিটা `public/` ফোল্ডারে রাখবে।
 2. **Project thumbnails** — `PROJECTS` array-এর `imageBg` এখন flat color; চাইলে `ProjectCard.tsx`-এ `next/image` দিয়ে actual screenshot বসাও।

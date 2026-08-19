@@ -15,7 +15,7 @@ export function WindowFrame({
     <div className={cn("win overflow-hidden", className)}>
       <div className={cn("win-titlebar", titleClassName)}>
         <span className="truncate">{title}</span>
-        <span className="flex items-center gap-1.5 shrink-0">
+        <span className="flex shrink-0 items-center gap-1.5">
           <span className="win-dot" />
           <span className="win-dot" />
           <span className="win-dot bg-orange" />

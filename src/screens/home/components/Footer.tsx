@@ -1,51 +1,64 @@
 "use client";
 
-import Link from "next/link";
 import { Github, Linkedin, Mail, Twitter } from "lucide-react";
+import { useHomeQuery } from "@/services";
 
-const SOCIALS = [
-  { icon: Github, href: "https://github.com/abdullahalmaksud", label: "GitHub" },
-  { icon: Linkedin, href: "https://linkedin.com/in/abdullahalmaksud", label: "LinkedIn" },
-  { icon: Mail, href: "mailto:contact@abdullahalmaksud.com", label: "Email" },
-  { icon: Twitter, href: "https://twitter.com/abdullahalmaksud", label: "X (Twitter)" },
-];
+const DEFAULT_FOOTER = {
+  connectText: "Let's connect",
+  copyright: "© 2025 Maksud. All rights reserved.",
+  socials: [
+    { platform: "Github", url: "https://github.com/abdullahalmaksud" },
+    { platform: "Linkedin", url: "https://linkedin.com/in/abdullahalmaksud" },
+    { platform: "Mail", url: "mailto:contact@abdullahalmaksud.com" },
+    { platform: "Twitter", url: "https://twitter.com/abdullahalmaksud" },
+  ],
+};
 
 export function Footer() {
+  const { data: serverHomeData } = useHomeQuery();
+  const footer = serverHomeData?.footer || DEFAULT_FOOTER;
+
+  const iconMap: Record<string, any> = {
+    Github,
+    Linkedin,
+    Mail,
+    Twitter,
+  };
+
   return (
-    <footer className="border-t border-slate-200 dark:border-dark-border/60 py-10 bg-light-bg dark:bg-dark-bg transition-colors duration-300">
-      <div className="max-w-7xl mx-auto px-6 sm:px-10 flex flex-col sm:flex-row items-center justify-between gap-6">
-        
-        {/* Left: Let's connect • Socials */}
-        <div className="flex items-center gap-4">
-          <div className="flex items-center gap-2">
-            <span className="text-xs font-semibold text-slate-600 dark:text-slate-400">
-              Let&apos;s connect
-            </span>
-            <span className="w-1.5 h-1.5 rounded-full bg-gold inline-block" />
-          </div>
+    <footer className="flex flex-col items-center justify-between gap-6 border-t border-slate-200 pb-6 pt-16 dark:border-white/[0.06] sm:flex-row">
+      {/* Left: Let's connect & Social Buttons */}
+      <div className="flex flex-wrap items-center gap-4 sm:gap-6">
+        <div className="flex items-center gap-2">
+          <span className="text-xs font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400">
+            {footer.connectText}
+          </span>
+          <span className="h-1.5 w-1.5 rounded-full bg-gold" />
+        </div>
 
-          <div className="flex items-center gap-3 pl-2">
-            {SOCIALS.map(({ icon: Icon, href, label }) => (
-              <Link
-                key={label}
-                href={href}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={label}
-                className="w-8 h-8 rounded-full border border-slate-300 dark:border-dark-border flex items-center justify-center text-slate-600 dark:text-slate-400 hover:border-gold hover:text-gold dark:hover:border-gold dark:hover:text-gold transition-all duration-200 hover:scale-110"
+        <div className="flex items-center gap-2.5">
+          {footer.socials.map((social, idx) => {
+            const Icon = iconMap[social.platform];
+            return (
+              <a
+                key={idx}
+                href={social.url}
+                target={social.platform !== "Mail" ? "_blank" : undefined}
+                rel={social.platform !== "Mail" ? "noreferrer" : undefined}
+                className="flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-500 shadow-sm transition-colors hover:border-gold hover:text-gold dark:border-white/10 dark:bg-[#0C1018] dark:text-slate-400"
+                aria-label={social.platform}
               >
-                <Icon size={15} />
-              </Link>
-            ))}
-          </div>
+                {Icon && <Icon size={15} />}
+              </a>
+            );
+          })}
         </div>
-
-        {/* Right: Copyright */}
-        <div className="text-xs text-slate-500 dark:text-slate-500 font-medium">
-          © 2025 Maksud. All rights reserved.
-        </div>
-
       </div>
+
+      {/* Right: Copyright */}
+      <p className="text-xs tracking-wider text-slate-400 dark:text-slate-500">
+        {footer.copyright}
+      </p>
     </footer>
   );
 }

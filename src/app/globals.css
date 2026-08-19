@@ -17,13 +17,13 @@
   --ring: 38 76% 56%;
   --radius: 0.75rem;
 
-  --theme-bg: #F8FAFC;
-  --theme-surface: #FFFFFF;
-  --theme-card: #F1F5F9;
-  --theme-border: #E2E8F0;
-  --theme-text-muted: #64748B;
-  --theme-text-main: #0F172A;
-  --theme-gold: #D97706;
+  --theme-bg: #f8fafc;
+  --theme-surface: #ffffff;
+  --theme-card: #f1f5f9;
+  --theme-border: #e2e8f0;
+  --theme-text-muted: #64748b;
+  --theme-text-main: #0f172a;
+  --theme-gold: #d97706;
   --theme-gold-glow: rgba(217, 119, 6, 0.2);
 }
 
@@ -39,13 +39,13 @@
   --input: 217 33% 17%;
   --ring: 38 76% 56%;
 
-  --theme-bg: #080A0E;
-  --theme-surface: #0E121A;
+  --theme-bg: #080a0e;
+  --theme-surface: #0e121a;
   --theme-card: #121824;
-  --theme-border: #1E2738;
-  --theme-text-muted: #8E9EB5;
-  --theme-text-main: #FFFFFF;
-  --theme-gold: #E5A93C;
+  --theme-border: #1e2738;
+  --theme-text-muted: #8e9eb5;
+  --theme-text-main: #ffffff;
+  --theme-gold: #e5a93c;
   --theme-gold-glow: rgba(229, 169, 60, 0.35);
 }
 
@@ -58,18 +58,27 @@ body {
   color: var(--theme-text-main);
   overflow-x: hidden;
   font-family: var(--font-sans), system-ui, sans-serif;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
 }
 
 @media (pointer: fine) {
-  a, button, [role="button"], input, select, textarea, label, .card-hover-glow {
+  a,
+  button,
+  [role="button"],
+  input,
+  select,
+  textarea,
+  label,
+  .card-hover-glow {
     cursor: pointer;
   }
 }
 
 ::selection {
-  background: #E5A93C;
-  color: #080A0E;
+  background: #e5a93c;
+  color: #080a0e;
 }
 
 /* Custom scrollbar */
@@ -77,14 +86,14 @@ body {
   width: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #080A0E;
+  background: #080a0e;
 }
 ::-webkit-scrollbar-thumb {
-  background: #1E2738;
+  background: #1e2738;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #E5A93C;
+  background: #e5a93c;
 }
 
 /* Glowing gold node dot */
@@ -92,15 +101,17 @@ body {
   width: 8px;
   height: 8px;
   border-radius: 9999px;
-  background-color: #E5A93C;
-  box-shadow: 0 0 12px 3px rgba(229, 169, 60, 0.65), 0 0 24px 6px rgba(229, 169, 60, 0.3);
+  background-color: #e5a93c;
+  box-shadow:
+    0 0 12px 3px rgba(229, 169, 60, 0.65),
+    0 0 24px 6px rgba(229, 169, 60, 0.3);
 }
 
 .gold-node-sm {
   width: 5px;
   height: 5px;
   border-radius: 9999px;
-  background-color: #E5A93C;
+  background-color: #e5a93c;
   box-shadow: 0 0 8px 2px rgba(229, 169, 60, 0.5);
 }
 
@@ -111,7 +122,7 @@ body {
 
 /* Gold Gradient Text */
 .text-gradient-gold {
-  background: linear-gradient(135deg, #F3BA42 0%, #E5A93C 50%, #C89028 100%);
+  background: linear-gradient(135deg, #f3ba42 0%, #e5a93c 50%, #c89028 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }

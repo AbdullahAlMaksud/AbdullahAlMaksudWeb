@@ -13,13 +13,9 @@ export function ThemeToggle() {
       title="Press D to toggle theme"
       aria-label="Toggle dark mode"
     >
-      {theme === "dark" ? (
-        <Sun size={12} className="text-orange" />
-      ) : (
-        <Moon size={12} />
-      )}
+      {theme === "dark" ? <Sun size={12} className="text-orange" /> : <Moon size={12} />}
       <span>{theme === "dark" ? "LIGHT" : "DARK"}</span>
-      <span className="opacity-40 text-[9px] ml-1">[D]</span>
+      <span className="ml-1 text-[9px] opacity-40">[D]</span>
     </button>
   );
 }

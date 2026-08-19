@@ -1,57 +1,81 @@
 "use client";
 
-import Link from "next/link";
-import { Mail, ArrowUpRight } from "lucide-react";
+import { useState } from "react";
+import { ArrowUpRight, Mail } from "lucide-react";
+import { useHomeQuery } from "@/services";
+import { ContactDrawer } from "./ContactDrawer";
+
+const DEFAULT_CONTACT = {
+  headlineLines: ["Let's create", "something", "meaningful", "together."],
+  highlightIndex: 2,
+  ctaText: "GET IN TOUCH",
+  email: "contact@abdullahalmaksud.com",
+};
 
 export function ContactSection() {
+  const { data: serverHomeData } = useHomeQuery();
+  const contact = serverHomeData?.contact || DEFAULT_CONTACT;
+
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
   return (
-    <section id="contact" className="relative py-16 lg:py-24">
-      <div className="max-w-7xl mx-auto px-6 sm:px-10">
-        
-        {/* Contact Banner Card */}
-        <div className="relative rounded-3xl border border-slate-300 dark:border-dark-border bg-gradient-to-br from-light-surface via-light-card to-light-surface dark:from-dark-surface dark:via-dark-card dark:to-dark-surface p-8 sm:p-14 overflow-hidden shadow-2xl">
-          
-          {/* Ambient Gold Glow inside card */}
-          <div className="absolute top-0 right-0 w-80 h-80 bg-gold/10 rounded-full blur-3xl pointer-events-none" />
-          
-          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            
-            {/* Left/Main Column: Title */}
-            <div className="lg:col-span-8 space-y-6">
-              {/* Mail Icon in circular badge */}
-              <div className="w-12 h-12 rounded-full border border-slate-300 dark:border-dark-border bg-light-surface dark:bg-dark-surface flex items-center justify-center text-gold shadow-sm">
-                <Mail size={22} />
-              </div>
+    <div id="contact" className="flex scroll-mt-28 justify-end pt-10 [perspective:1000px]">
+      <div
+        onClick={() => setIsDrawerOpen(true)}
+        role="button"
+        tabIndex={0}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            setIsDrawerOpen(true);
+          }
+        }}
+        className="group relative flex min-h-[460px] w-full max-w-[350px] transform cursor-pointer flex-col justify-between rounded-[32px] border border-slate-200 bg-gradient-to-b from-white via-slate-50 to-slate-100 px-8 pb-9 pt-16 shadow-[0_30px_70px_rgba(0,0,0,0.1)] transition-all duration-500 dark:border-white/15 dark:bg-gradient-to-b dark:from-[#121824]/95 dark:via-[#0E131C]/95 dark:to-[#080B10]/95 dark:shadow-[0_30px_70px_rgba(0,0,0,0.95)] sm:min-h-[500px] sm:max-w-[370px] sm:px-9 sm:pb-10 sm:pt-20 lg:[transform:rotateY(-11deg)_rotateX(7deg)_rotateZ(2deg)] hover:lg:[transform:rotateY(-2deg)_rotateX(1deg)_rotateZ(0deg)]"
+      >
+        {/* Subtle Ambient Gold Glow */}
+        <div className="pointer-events-none absolute -right-10 -top-10 h-52 w-52 rounded-full bg-gold/10 blur-3xl transition-colors duration-500 group-hover:bg-gold/20" />
 
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.15]">
-                Let&apos;s create
-                <br />
-                something{" "}
-                <span className="text-gold">
-                  meaningful
-                </span>
-                <br />
-                together.
-              </h2>
-            </div>
-
-            {/* Right Column: CTA Button */}
-            <div className="lg:col-span-4 flex lg:justify-end items-center">
-              <Link
-                href="mailto:contact@abdullahalmaksud.com"
-                className="group inline-flex items-center gap-4 px-8 py-4 rounded-full border border-slate-400 dark:border-slate-600 hover:border-gold dark:hover:border-gold bg-light-surface dark:bg-dark-surface hover:bg-gold dark:hover:bg-gold text-slate-900 dark:text-white hover:text-slate-950 dark:hover:text-slate-950 font-bold tracking-widest text-xs transition-all duration-300 shadow-md hover:scale-105"
-              >
-                <span>GET IN TOUCH</span>
-                <div className="w-7 h-7 rounded-full bg-slate-200 dark:bg-dark-border group-hover:bg-slate-950 group-hover:text-gold flex items-center justify-center transition-colors">
-                  <ArrowUpRight size={15} />
-                </div>
-              </Link>
-            </div>
-
-          </div>
+        {/* Overlapping Absolute Mail Icon Badge */}
+        <div className="absolute -top-8 left-8 z-20 flex h-16 w-16 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-800 shadow-[0_14px_30px_rgba(0,0,0,0.95)] transition-transform duration-500 group-hover:scale-110 dark:border-white/20 dark:bg-[#161C28] dark:text-white sm:left-9">
+          <Mail size={26} />
         </div>
 
+        {/* Headline with Large, Crisp Typography */}
+        <div className="my-auto space-y-1">
+          <h2 className="text-3xl font-light leading-[1.18] tracking-tight text-slate-900 dark:text-white sm:text-4xl lg:text-[38px]">
+            {contact.headlineLines.map((line, idx) => {
+              if (idx === contact.highlightIndex) {
+                return (
+                  <span key={idx}>
+                    <span className="font-normal text-gold">{line}</span>
+                    <br />
+                  </span>
+                );
+              }
+              return (
+                <span key={idx}>
+                  {line}
+                  {idx !== contact.headlineLines.length - 1 && <br />}
+                </span>
+              );
+            })}
+          </h2>
+        </div>
+
+        {/* Bottom CTA Action */}
+        <div className="flex items-center justify-between pt-6">
+          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-300 sm:text-[13px]">
+            {contact.ctaText}
+          </span>
+          <div
+            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-gold/70 text-gold shadow-[0_0_15px_rgba(229,169,60,0.25)] transition-all duration-300 group-hover:scale-105 group-hover:border-gold group-hover:bg-gold group-hover:text-slate-950"
+            aria-label="Send email"
+          >
+            <ArrowUpRight size={17} />
+          </div>
+        </div>
       </div>
-    </section>
+
+      <ContactDrawer isOpen={isDrawerOpen} onClose={() => setIsDrawerOpen(false)} />
+    </div>
   );
 }
