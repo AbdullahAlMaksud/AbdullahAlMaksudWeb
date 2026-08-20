@@ -5,10 +5,11 @@ import { ArrowLeft } from "lucide-react";
 import { NavBar } from "@/screens/home/components/NavBar";
 import { Footer } from "@/screens/home/components/Footer";
 import { AppProjectCard } from "@/components/cards/AppProjectCard";
+import { ProjectCardSkeleton } from "@/components/skeletons/CardSkeletons";
 import { useProjectsQuery } from "@/services";
 
 export function ProjectsScreen() {
-  const { data: serverProjects } = useProjectsQuery();
+  const { data: serverProjects, isLoading } = useProjectsQuery();
 
   const projects = Array.isArray(serverProjects) ? serverProjects : [];
 
@@ -47,21 +48,23 @@ export function ProjectsScreen() {
 
         {/* Projects Grid */}
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-          {projects.map((p: any) => (
-            <AppProjectCard
-              key={p.slug}
-              slug={p.slug}
-              title={p.title}
-              description={p.description}
-              image={p.coverImage || p.image || "/images/projects/devtools.jpg"}
-              tags={p.stack || p.tags || []}
-              year={p.year || "2025"}
-              link={p.liveLink || p.link}
-              github={p.gitRepo || p.github}
-              category={p.tag || p.category || "Web Application"}
-              featured={p.isFeatured || p.featured}
-            />
-          ))}
+          {isLoading && projects.length === 0
+            ? Array.from({ length: 6 }).map((_, i) => <ProjectCardSkeleton key={i} />)
+            : projects.map((p: any) => (
+                <AppProjectCard
+                  key={p.slug}
+                  slug={p.slug}
+                  title={p.title}
+                  description={p.description}
+                  image={p.coverImage || p.image || "/images/projects/devtools.jpg"}
+                  tags={p.stack || p.tags || []}
+                  year={p.year || "2025"}
+                  link={p.liveLink || p.link}
+                  github={p.gitRepo || p.github}
+                  category={p.tag || p.category || "Web Application"}
+                  featured={p.isFeatured || p.featured}
+                />
+              ))}
         </div>
       </div>
 

@@ -5,10 +5,11 @@ import { ArrowLeft } from "lucide-react";
 import { NavBar } from "@/screens/home/components/NavBar";
 import { Footer } from "@/screens/home/components/Footer";
 import { GraphicDesignCard } from "@/components/cards/GraphicDesignCard";
+import { GraphicCardSkeleton } from "@/components/skeletons/CardSkeletons";
 import { useDesignsQuery } from "@/services";
 
 export function GraphicsScreen() {
-  const { data: serverDesigns } = useDesignsQuery();
+  const { data: serverDesigns, isLoading } = useDesignsQuery();
 
   const designs = Array.isArray(serverDesigns) ? serverDesigns : [];
 
@@ -47,9 +48,9 @@ export function GraphicsScreen() {
 
         {/* Designs Grid */}
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-          {designs.map((design: any) => (
-            <GraphicDesignCard key={design.id} {...design} />
-          ))}
+          {isLoading && designs.length === 0
+            ? Array.from({ length: 6 }).map((_, i) => <GraphicCardSkeleton key={i} />)
+            : designs.map((design: any) => <GraphicDesignCard key={design.id} {...design} />)}
         </div>
       </div>
 

@@ -6,6 +6,7 @@ import { ArrowLeft } from "lucide-react";
 import { NavBar } from "@/screens/home/components/NavBar";
 import { Footer } from "@/screens/home/components/Footer";
 import { BlogCard, FeaturedBlogCard } from "@/components/cards/BlogCard";
+import { BlogCardSkeleton, FeaturedBlogCardSkeleton } from "@/components/skeletons/CardSkeletons";
 import { useBlogsQuery } from "@/services";
 
 const CATEGORIES = ["All", "Mindset", "Productivity", "Life", "Product", "Engineering"];
@@ -13,7 +14,7 @@ const CATEGORIES = ["All", "Mindset", "Productivity", "Life", "Product", "Engine
 export function BlogsScreen() {
   const [selectedCategory, setSelectedCategory] = useState("All");
 
-  const { data: serverBlogsData } = useBlogsQuery({
+  const { data: serverBlogsData, isLoading } = useBlogsQuery({
     published: true,
   });
 
@@ -89,25 +90,44 @@ export function BlogsScreen() {
         </header>
 
         {/* Featured Hero Blog */}
-        {featuredBlog && (
+        {isLoading && blogs.length === 0 ? (
           <div className="mb-16">
-            <FeaturedBlogCard {...featuredBlog} />
+            <FeaturedBlogCardSkeleton />
           </div>
+        ) : (
+          featuredBlog && (
+            <div className="mb-16">
+              <FeaturedBlogCard {...featuredBlog} />
+            </div>
+          )
         )}
 
         {/* Recent Articles Grid */}
-        {otherBlogs.length > 0 && (
+        {isLoading && blogs.length === 0 ? (
           <div className="space-y-6">
             <h3 className="border-b border-slate-200 pb-3 text-xl font-bold text-slate-900 dark:border-white/10 dark:text-white">
-              {selectedCategory === "All" ? "Recent Articles" : `${selectedCategory} Articles`}
+              Recent Articles
             </h3>
-
             <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-              {otherBlogs.map((blog) => (
-                <BlogCard key={blog.id} {...blog} />
+              {Array.from({ length: 6 }).map((_, i) => (
+                <BlogCardSkeleton key={i} />
               ))}
             </div>
           </div>
+        ) : (
+          otherBlogs.length > 0 && (
+            <div className="space-y-6">
+              <h3 className="border-b border-slate-200 pb-3 text-xl font-bold text-slate-900 dark:border-white/10 dark:text-white">
+                {selectedCategory === "All" ? "Recent Articles" : `${selectedCategory} Articles`}
+              </h3>
+
+              <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+                {otherBlogs.map((blog) => (
+                  <BlogCard key={blog.id} {...blog} />
+                ))}
+              </div>
+            </div>
+          )
         )}
       </div>
 

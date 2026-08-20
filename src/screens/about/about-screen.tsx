@@ -25,6 +25,7 @@ import { Footer } from "@/screens/home/components/Footer";
 import { AboutSpline } from "./components/AboutSpline";
 import { AlternatingTimeline } from "./components/AlternatingTimeline";
 import { useAboutQuery } from "@/services";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const DEFAULT_ABOUT_HEADER = {
   badge: "ABOUT ME",
@@ -43,7 +44,7 @@ const DEFAULT_ABOUT_HEADER = {
 };
 
 export default function AboutScreen() {
-  const { data: serverAboutData } = useAboutQuery();
+  const { data: serverAboutData, isLoading } = useAboutQuery();
   const header = serverAboutData?.header || DEFAULT_ABOUT_HEADER;
   const pillars = Array.isArray(serverAboutData?.pillars) ? serverAboutData.pillars : [];
   const skillsCategories = Array.isArray(serverAboutData?.skillsCategories)
@@ -316,48 +317,70 @@ export default function AboutScreen() {
           </div>
 
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {pillars.map((pillar) => {
-              const Icon = pillarIconMap[pillar.icon] || Code2;
-              return (
-                <div
-                  key={pillar.id}
-                  className="card-hover-glow group flex flex-col justify-between space-y-5 rounded-3xl border border-slate-300 bg-light-surface/90 p-6 backdrop-blur-sm transition-all duration-300 dark:border-dark-border dark:bg-[#0C1018]/90 sm:p-7"
-                >
-                  <div className="space-y-4">
+            {isLoading && pillars.length === 0
+              ? Array.from({ length: 4 }).map((_, i) => (
+                  <div
+                    key={i}
+                    className="space-y-5 rounded-3xl border border-slate-300 bg-light-surface/90 p-6 dark:border-dark-border dark:bg-[#0C1018]/90 sm:p-7"
+                  >
                     <div className="flex items-center justify-between">
-                      <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gold/10 text-gold shadow-sm transition-all duration-300 group-hover:scale-110 group-hover:bg-gold group-hover:text-black">
-                        <Icon size={22} />
+                      <Skeleton className="h-12 w-12 rounded-2xl bg-gold/20" />
+                      <Skeleton className="h-5 w-16 rounded-full" />
+                    </div>
+                    <Skeleton className="h-6 w-3/4 rounded" />
+                    <div className="space-y-1.5">
+                      <Skeleton className="h-3.5 w-full rounded" />
+                      <Skeleton className="h-3.5 w-4/5 rounded" />
+                    </div>
+                    <div className="flex flex-wrap gap-1.5 border-t border-slate-200 pt-2 dark:border-dark-border/60">
+                      <Skeleton className="h-5 w-14 rounded" />
+                      <Skeleton className="h-5 w-16 rounded" />
+                      <Skeleton className="h-5 w-12 rounded" />
+                    </div>
+                  </div>
+                ))
+              : pillars.map((pillar) => {
+                  const Icon = pillarIconMap[pillar.icon] || Code2;
+                  return (
+                    <div
+                      key={pillar.id}
+                      className="card-hover-glow group flex flex-col justify-between space-y-5 rounded-3xl border border-slate-300 bg-light-surface/90 p-6 backdrop-blur-sm transition-all duration-300 dark:border-dark-border dark:bg-[#0C1018]/90 sm:p-7"
+                    >
+                      <div className="space-y-4">
+                        <div className="flex items-center justify-between">
+                          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gold/10 text-gold shadow-sm transition-all duration-300 group-hover:scale-110 group-hover:bg-gold group-hover:text-black">
+                            <Icon size={22} />
+                          </div>
+                          <span className="rounded-full border border-gold/30 bg-gold/5 px-2.5 py-1 font-mono text-[10px] font-bold tracking-wider text-gold">
+                            {pillar.tag}
+                          </span>
+                        </div>
+
+                        <h3 className="text-lg font-bold text-slate-900 transition-colors group-hover:text-gold dark:text-white">
+                          {pillar.title}
+                        </h3>
+
+                        <p className="text-xs leading-relaxed text-slate-600 dark:text-slate-400 sm:text-sm">
+                          {pillar.description}
+                        </p>
                       </div>
-                      <span className="rounded-full border border-gold/30 bg-gold/5 px-2.5 py-1 font-mono text-[10px] font-bold tracking-wider text-gold">
-                        {pillar.tag}
-                      </span>
+
+                      {/* Pillar Skills Tags */}
+                      <div className="space-y-2 border-t border-slate-200 pt-2 dark:border-dark-border/60">
+                        <div className="flex flex-wrap gap-1.5">
+                          {pillar.skills.map((skill, idx) => (
+                            <span
+                              key={idx}
+                              className="rounded-md border border-slate-200 bg-light-card px-2 py-0.5 text-[11px] font-medium text-slate-700 dark:border-dark-border/50 dark:bg-[#121824] dark:text-slate-300"
+                            >
+                              {skill}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
                     </div>
-
-                    <h3 className="text-lg font-bold text-slate-900 transition-colors group-hover:text-gold dark:text-white">
-                      {pillar.title}
-                    </h3>
-
-                    <p className="text-xs leading-relaxed text-slate-600 dark:text-slate-400 sm:text-sm">
-                      {pillar.description}
-                    </p>
-                  </div>
-
-                  {/* Pillar Skills Tags */}
-                  <div className="space-y-2 border-t border-slate-200 pt-2 dark:border-dark-border/60">
-                    <div className="flex flex-wrap gap-1.5">
-                      {pillar.skills.map((skill, idx) => (
-                        <span
-                          key={idx}
-                          className="rounded-md border border-slate-200 bg-light-card px-2 py-0.5 text-[11px] font-medium text-slate-700 dark:border-dark-border/50 dark:bg-[#121824] dark:text-slate-300"
-                        >
-                          {skill}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
+                  );
+                })}
           </div>
         </section>
 
@@ -388,33 +411,53 @@ export default function AboutScreen() {
           </div>
 
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {skillsCategories.map(({ title, icon, skills }) => {
-              const Icon = skillCategoryIconMap[icon] || Terminal;
-              return (
-                <div
-                  key={title}
-                  className="card-hover-glow space-y-4 rounded-3xl border border-slate-300 bg-light-surface/90 p-6 backdrop-blur-md transition-all duration-300 dark:border-dark-border dark:bg-[#0C1018]/90"
-                >
-                  <div className="flex items-center gap-3">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gold/10 text-gold shadow-sm">
-                      <Icon size={19} />
+            {isLoading && skillsCategories.length === 0
+              ? Array.from({ length: 4 }).map((_, i) => (
+                  <div
+                    key={i}
+                    className="space-y-4 rounded-3xl border border-slate-300 bg-light-surface/90 p-6 dark:border-dark-border dark:bg-[#0C1018]/90"
+                  >
+                    <div className="flex items-center gap-3">
+                      <Skeleton className="h-10 w-10 rounded-xl bg-gold/20" />
+                      <Skeleton className="h-5 w-32 rounded" />
                     </div>
-                    <h3 className="text-base font-bold text-slate-900 dark:text-white">{title}</h3>
+                    <div className="flex flex-wrap gap-2 pt-2">
+                      <Skeleton className="h-6 w-16 rounded-full" />
+                      <Skeleton className="h-6 w-20 rounded-full" />
+                      <Skeleton className="h-6 w-14 rounded-full" />
+                      <Skeleton className="w-18 h-6 rounded-full" />
+                    </div>
                   </div>
+                ))
+              : skillsCategories.map(({ title, icon, skills }) => {
+                  const Icon = skillCategoryIconMap[icon] || Terminal;
+                  return (
+                    <div
+                      key={title}
+                      className="card-hover-glow space-y-4 rounded-3xl border border-slate-300 bg-light-surface/90 p-6 backdrop-blur-md transition-all duration-300 dark:border-dark-border dark:bg-[#0C1018]/90"
+                    >
+                      <div className="flex items-center gap-3">
+                        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gold/10 text-gold shadow-sm">
+                          <Icon size={19} />
+                        </div>
+                        <h3 className="text-base font-bold text-slate-900 dark:text-white">
+                          {title}
+                        </h3>
+                      </div>
 
-                  <div className="flex flex-wrap gap-2 pt-2">
-                    {skills.map((skill) => (
-                      <span
-                        key={skill}
-                        className="rounded-full border border-slate-200 bg-light-card px-3 py-1 text-xs font-medium text-slate-700 transition-colors hover:border-gold hover:text-gold dark:border-dark-border dark:bg-[#131824] dark:text-slate-300"
-                      >
-                        {skill}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              );
-            })}
+                      <div className="flex flex-wrap gap-2 pt-2">
+                        {skills.map((skill) => (
+                          <span
+                            key={skill}
+                            className="rounded-full border border-slate-200 bg-light-card px-3 py-1 text-xs font-medium text-slate-700 transition-colors hover:border-gold hover:text-gold dark:border-dark-border dark:bg-[#131824] dark:text-slate-300"
+                          >
+                            {skill}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  );
+                })}
           </div>
         </section>
 

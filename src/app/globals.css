@@ -152,3 +152,65 @@ body {
 .animate-fade-in-up {
   animation: fadeInUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
+
+/* Skeleton Shimmer Animation */
+@keyframes shimmerWave {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.shimmer-gold {
+  position: relative;
+  overflow: hidden;
+}
+
+.shimmer-gold::after {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  transform: translateX(-100%);
+  background-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(229, 169, 60, 0.04) 20%,
+    rgba(229, 169, 60, 0.12) 50%,
+    rgba(229, 169, 60, 0.04) 80%,
+    transparent 100%
+  );
+  animation: shimmerWave 2.2s infinite ease-in-out;
+  content: "";
+  pointer-events: none;
+}
+
+.dark .shimmer-gold::after {
+  background-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(229, 169, 60, 0.03) 20%,
+    rgba(229, 169, 60, 0.09) 50%,
+    rgba(229, 169, 60, 0.03) 80%,
+    transparent 100%
+  );
+}
+
+@keyframes pulseGoldGlow {
+  0%,
+  100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.85;
+    transform: scale(1.05);
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulseGoldGlow 3s ease-in-out infinite;
+}

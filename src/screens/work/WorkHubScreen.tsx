@@ -7,6 +7,7 @@ import { Footer } from "@/screens/home/components/Footer";
 import { AppProjectCard } from "@/components/cards/AppProjectCard";
 import { GraphicDesignCard } from "@/components/cards/GraphicDesignCard";
 import { BookShowcaseCard } from "@/components/cards/BookShowcaseCard";
+import { ProjectCardSkeleton, GraphicCardSkeleton } from "@/components/skeletons/CardSkeletons";
 import { useProjectsQuery, useBooksQuery, useDesignsQuery } from "@/services";
 
 const DEFAULT_BOOK = {
@@ -25,9 +26,9 @@ const DEFAULT_BOOK = {
 };
 
 export function WorkHubScreen() {
-  const { data: serverProjects } = useProjectsQuery();
-  const { data: serverBooksData } = useBooksQuery();
-  const { data: serverDesigns } = useDesignsQuery();
+  const { data: serverProjects, isLoading: isProjectsLoading } = useProjectsQuery();
+  const { data: serverBooksData, isLoading: isBooksLoading } = useBooksQuery();
+  const { data: serverDesigns, isLoading: isDesignsLoading } = useDesignsQuery();
 
   const rawProjects = Array.isArray(serverProjects) ? serverProjects : [];
 
@@ -150,9 +151,9 @@ export function WorkHubScreen() {
           </div>
 
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-            {projects.map((project) => (
-              <AppProjectCard key={project.slug} {...project} />
-            ))}
+            {isProjectsLoading && projects.length === 0
+              ? Array.from({ length: 2 }).map((_, i) => <ProjectCardSkeleton key={i} />)
+              : projects.map((project) => <AppProjectCard key={project.slug} {...project} />)}
           </div>
         </section>
 
@@ -178,9 +179,9 @@ export function WorkHubScreen() {
           </div>
 
           <div className="grid grid-cols-1 gap-7 sm:grid-cols-2 lg:grid-cols-3">
-            {designs.map((design: any) => (
-              <GraphicDesignCard key={design.id} {...design} />
-            ))}
+            {isDesignsLoading && designs.length === 0
+              ? Array.from({ length: 3 }).map((_, i) => <GraphicCardSkeleton key={i} />)
+              : designs.map((design: any) => <GraphicDesignCard key={design.id} {...design} />)}
           </div>
         </section>
 

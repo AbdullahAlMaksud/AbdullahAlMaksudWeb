@@ -11,6 +11,7 @@ import "swiper/css/effect-cards";
 import "swiper/css/pagination";
 
 import { useHomeQuery, useProjectsQuery } from "@/services";
+import { FeaturedProjectsSkeleton } from "@/components/skeletons/SectionSkeletons";
 
 const DEFAULT_FEATURED_CONFIG = {
   tagText: "FEATURED PROJECT",
@@ -23,8 +24,10 @@ export function FeaturedProjects() {
   const [activeProjectIndex, setActiveProjectIndex] = useState(0);
   const swiperInstanceRef = useRef<any>(null);
 
-  const { data: serverHomeData } = useHomeQuery();
-  const { data: serverProjects } = useProjectsQuery({ featured: true });
+  const { data: serverHomeData, isLoading: isHomeLoading } = useHomeQuery();
+  const { data: serverProjects, isLoading: isProjectsLoading } = useProjectsQuery({
+    featured: true,
+  });
 
   const featuredProjects = serverHomeData?.featuredProjects || DEFAULT_FEATURED_CONFIG;
 
@@ -46,6 +49,10 @@ export function FeaturedProjects() {
       swiperInstanceRef.current.slideTo(index);
     }
   };
+
+  if ((isProjectsLoading || isHomeLoading) && projects.length === 0) {
+    return <FeaturedProjectsSkeleton />;
+  }
 
   return (
     <div id="works" className="relative scroll-mt-28 space-y-6 [perspective:1400px]">

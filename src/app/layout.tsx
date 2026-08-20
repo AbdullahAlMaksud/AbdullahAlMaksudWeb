@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans, JetBrains_Mono, Caveat } from "next/font/google";
 import "./globals.css";
@@ -5,6 +6,8 @@ import { ThemeProvider } from "@/providers/ThemeProvider";
 import { LenisProvider } from "@/providers/LenisProvider";
 import { ReactQueryProvider } from "@/providers/ReactQueryProvider";
 import { CustomCursor } from "@/components/CustomCursor";
+import { TopProgressBar } from "@/components/ui/TopProgressBar";
+import { SessionPreloader } from "@/components/ui/InitialLoader";
 
 const sans = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -148,6 +151,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
+        <Suspense fallback={null}>
+          <TopProgressBar />
+        </Suspense>
+        <SessionPreloader />
         <ReactQueryProvider>
           <ThemeProvider>
             <LenisProvider>

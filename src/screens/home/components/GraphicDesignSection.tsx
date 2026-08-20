@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { useDesignsQuery, useHomeQuery } from "@/services";
+import { GraphicDesignSectionSkeleton } from "@/components/skeletons/SectionSkeletons";
 
 const DEFAULT_GRAPHIC_DESIGN = {
   badge: "GRAPHIC DESIGN",
@@ -14,12 +15,16 @@ const DEFAULT_GRAPHIC_DESIGN = {
 
 export function GraphicDesignSection() {
   const { data: serverHomeData } = useHomeQuery();
-  const { data: serverDesigns } = useDesignsQuery();
+  const { data: serverDesigns, isLoading: isDesignsLoading } = useDesignsQuery();
 
   const graphicDesign = serverHomeData?.graphicDesign || DEFAULT_GRAPHIC_DESIGN;
 
   const rawDesigns = Array.isArray(serverDesigns) ? serverDesigns : [];
   const designs = rawDesigns.slice(0, 3);
+
+  if (isDesignsLoading && designs.length === 0) {
+    return <GraphicDesignSectionSkeleton />;
+  }
 
   return (
     <div id="designs" className="scroll-mt-28 space-y-6 [perspective:1200px] lg:pl-10 xl:pl-16">

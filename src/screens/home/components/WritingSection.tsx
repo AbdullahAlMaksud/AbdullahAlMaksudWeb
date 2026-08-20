@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { ArrowUpRight, ArrowRight } from "lucide-react";
 import { useBlogsQuery, useHomeQuery } from "@/services";
+import { WritingSectionSkeleton } from "@/components/skeletons/SectionSkeletons";
 
 const DEFAULT_WRITING = {
   badge: "WRITING",
@@ -13,7 +14,7 @@ const DEFAULT_WRITING = {
 
 export function WritingSection() {
   const { data: serverHomeData } = useHomeQuery();
-  const { data: serverBlogsData } = useBlogsQuery({ published: true });
+  const { data: serverBlogsData, isLoading: isBlogsLoading } = useBlogsQuery({ published: true });
 
   const writing = serverHomeData?.writing || DEFAULT_WRITING;
 
@@ -25,6 +26,10 @@ export function WritingSection() {
     title: b.title,
     publishedAt: b.publishedAt || "Recently",
   }));
+
+  if (isBlogsLoading && blogs.length === 0) {
+    return <WritingSectionSkeleton />;
+  }
 
   return (
     <div id="writing" className="scroll-mt-28 space-y-6 pt-4 [perspective:1200px]">
