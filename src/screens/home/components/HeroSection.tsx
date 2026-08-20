@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight, MapPin, Calendar, Code2, Coffee } from "lucide-react";
 import { useHomeQuery } from "@/services";
+import { getImageUrl } from "@/lib/image";
 
 const DEFAULT_HERO = {
   greeting: "Hello, I'm",
@@ -91,7 +92,7 @@ export function HeroSection() {
           {/* Portrait Visual */}
           <div className="relative z-10 flex h-full w-full items-end justify-center">
             <Image
-              src={hero.portraitImage || "/images/portrait.png"}
+              src={getImageUrl(hero.portraitImage, "/images/portrait.png")}
               alt={hero.portraitAlt || "Abdullah Al Maksud"}
               width={420}
               height={500}

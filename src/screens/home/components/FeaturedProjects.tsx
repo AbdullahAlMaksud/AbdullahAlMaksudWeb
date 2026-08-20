@@ -12,6 +12,7 @@ import "swiper/css/pagination";
 
 import { useHomeQuery, useProjectsQuery } from "@/services";
 import { FeaturedProjectsSkeleton } from "@/components/skeletons/SectionSkeletons";
+import { getImageUrl } from "@/lib/image";
 
 const DEFAULT_FEATURED_CONFIG = {
   tagText: "FEATURED PROJECT",
@@ -85,12 +86,13 @@ export function FeaturedProjects() {
                 {/* Mockup Screen */}
                 <div className="relative flex h-52 w-full items-center justify-center overflow-hidden rounded-xl border border-slate-200 bg-slate-50 shadow-inner dark:border-white/10 dark:bg-[#080B10] sm:h-60">
                   <Image
-                    src={project.image || featuredProjects.defaultMockup}
+                    src={getImageUrl(project.image)}
                     alt={project.title}
                     fill
                     priority
                     className="object-cover object-top"
                   />
+
                   <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-white/90 via-transparent to-transparent dark:from-[#0C1018]/90" />
                 </div>
 

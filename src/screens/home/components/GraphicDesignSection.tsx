@@ -5,6 +5,7 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { useDesignsQuery, useHomeQuery } from "@/services";
 import { GraphicDesignSectionSkeleton } from "@/components/skeletons/SectionSkeletons";
+import { getImageUrl } from "@/lib/image";
 
 const DEFAULT_GRAPHIC_DESIGN = {
   badge: "GRAPHIC DESIGN",
@@ -54,12 +55,13 @@ export function GraphicDesignSection() {
             <div key={design.id} className="group space-y-2">
               <div className="relative h-60 w-full overflow-hidden rounded-2xl border border-slate-200 bg-slate-100 shadow-[0_20px_45px_rgba(0,0,0,0.1)] transition-all duration-300 group-hover:-translate-y-2 group-hover:border-gold/50 dark:border-white/10 dark:bg-[#0A0D14] dark:shadow-[0_20px_45px_rgba(0,0,0,0.85)] sm:h-64">
                 <Image
-                  src={design.coverImage || "/images/designs/byou.jpg"}
+                  src={getImageUrl(design.coverImage)}
                   alt={design.title}
                   fill
                   className="object-cover transition-transform duration-500 group-hover:scale-105"
                 />
               </div>
+
               <p className="text-center text-[11px] font-medium text-slate-500 dark:text-slate-400">
                 {design.subtitle || design.category || "Design"}
               </p>

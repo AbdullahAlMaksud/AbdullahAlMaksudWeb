@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { Palette, Eye, Sparkles } from "lucide-react";
+import { getImageUrl } from "@/lib/image";
 
 export interface GraphicDesignItem {
   id: string;
@@ -18,7 +19,7 @@ export function GraphicDesignCard({
   title,
   subtitle,
   description,
-  coverImage = "/images/designs/byou.jpg",
+  coverImage = "/images/portrait.png",
   tools,
   year,
   category = "Brand Identity",
@@ -27,7 +28,7 @@ export function GraphicDesignCard({
     <div className="group relative flex h-[440px] flex-col justify-end overflow-hidden rounded-3xl border border-slate-200 bg-slate-950 shadow-xl transition-all duration-500 hover:border-gold/60 hover:shadow-[0_0_35px_rgba(229,169,60,0.22)] dark:border-white/[0.08] sm:h-[480px]">
       {/* 1. Full-Bleed Edge-to-Edge Artwork (NO PADDING) */}
       <Image
-        src={coverImage}
+        src={getImageUrl(coverImage)}
         alt={title}
         fill
         className="group-hover:scale-108 contrast-105 object-cover object-center filter transition-transform duration-700 ease-out"

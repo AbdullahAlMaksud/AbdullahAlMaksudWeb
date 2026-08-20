@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight, Github, ExternalLink, Layers, Sparkles } from "lucide-react";
+import { getImageUrl } from "@/lib/image";
 
 export interface ProjectItem {
   slug: string;
@@ -21,7 +22,7 @@ export function AppProjectCard({
   slug,
   title,
   description,
-  image = "/images/projects/devtools.jpg",
+  image = "/images/portrait.png",
   tags,
   year = "2025",
   link,
@@ -34,7 +35,7 @@ export function AppProjectCard({
       {/* 1. Full-Bleed Edge-to-Edge Image (NO PADDING) */}
       <div className="relative h-56 w-full overflow-hidden bg-slate-950 sm:h-64">
         <Image
-          src={image}
+          src={getImageUrl(image)}
           alt={title}
           fill
           priority={featured}

@@ -6,6 +6,7 @@ import { ArrowLeft, ArrowUpRight, Calendar, Clock, Tag } from "lucide-react";
 import { NavBar } from "@/screens/home/components/NavBar";
 import { Footer } from "@/screens/home/components/Footer";
 import { getBlogBySlugApi, getBlogsApi } from "@/services/blog/api";
+import { getImageUrl } from "@/lib/image";
 
 type BlockType =
   | { type: "paragraph"; text: string }
@@ -79,7 +80,7 @@ function RenderBlock({ block }: { block: BlockType }) {
       return (
         <figure className="my-6 space-y-2">
           <div className="relative h-72 w-full overflow-hidden rounded-2xl border border-slate-300 bg-slate-950 shadow-lg dark:border-dark-border sm:h-96">
-            <Image src={block.src} alt={block.alt} fill className="object-cover" />
+            <Image src={getImageUrl(block.src)} alt={block.alt} fill className="object-cover" />
           </div>
           {block.caption && (
             <figcaption className="text-center text-xs italic text-slate-500">
@@ -255,7 +256,7 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
 
         {/* Featured Cover Image */}
         <div className="relative mb-12 h-72 w-full overflow-hidden rounded-3xl border border-slate-300 bg-slate-950 shadow-2xl dark:border-dark-border sm:h-[420px]">
-          <Image src={cover} alt={title} fill priority className="object-cover" />
+          <Image src={getImageUrl(cover)} alt={title} fill priority className="object-cover" />
         </div>
 
         {/* Post Content */}
@@ -282,12 +283,13 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
         <div className="mt-16 flex flex-col items-center gap-6 rounded-3xl border border-slate-300 bg-light-surface p-6 shadow-md dark:border-dark-border dark:bg-[#0C1018] sm:flex-row sm:p-8">
           <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-2xl border border-gold/40 bg-slate-950">
             <Image
-              src={author.avatar || "/images/portrait.png"}
+              src={getImageUrl(author.avatar)}
               alt={author.name || "Abdullah Al Maksud"}
               fill
               className="object-cover object-top"
             />
           </div>
+
           <div className="space-y-1 text-center sm:text-left">
             <span className="text-[10px] font-bold uppercase tracking-widest text-gold">
               WRITTEN BY

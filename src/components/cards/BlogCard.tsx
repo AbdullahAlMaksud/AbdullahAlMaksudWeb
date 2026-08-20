@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Calendar, Clock } from "lucide-react";
+import { getImageUrl } from "@/lib/image";
 
 export interface BlogItem {
   id: string;
@@ -20,7 +21,7 @@ export function BlogCard({
   slug,
   title,
   excerpt,
-  cover = "/images/blogs/blog-0.jpg",
+  cover = "/images/portrait.png",
   category,
   publishedAt,
   readingTime,
@@ -33,7 +34,7 @@ export function BlogCard({
       {/* 1. Full-Bleed Edge-to-Edge Cover (NO PADDING) */}
       <div className="relative h-52 w-full overflow-hidden bg-slate-950 sm:h-56">
         <Image
-          src={cover}
+          src={getImageUrl(cover)}
           alt={title}
           fill
           className="group-hover:scale-108 contrast-105 object-cover filter transition-transform duration-700 ease-out"
@@ -89,7 +90,7 @@ export function FeaturedBlogCard({
   slug,
   title,
   excerpt,
-  cover = "/images/blogs/blog-0.jpg",
+  cover = "/images/portrait.png",
   category,
   publishedAt,
   readingTime,
@@ -103,12 +104,13 @@ export function FeaturedBlogCard({
         {/* Full-Bleed Image on Left (Taller & Roomier) */}
         <div className="relative h-72 min-h-[320px] overflow-hidden bg-slate-950 sm:h-96 lg:col-span-5 lg:h-full lg:min-h-[520px]">
           <Image
-            src={cover}
+            src={getImageUrl(cover)}
             alt={title}
             fill
             priority
             className="group-hover:scale-108 contrast-105 object-cover filter transition-transform duration-700 ease-out"
           />
+
           {/* Responsive Soft Gradient Overlay */}
           <div className="pointer-events-none absolute inset-0 hidden bg-gradient-to-t from-transparent via-transparent to-white/90 opacity-90 dark:to-[#090D16] lg:block lg:bg-gradient-to-r" />
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-white/90 via-transparent to-transparent dark:from-[#090D16] lg:hidden" />

@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight, BookOpen, Sparkles, ShoppingBag } from "lucide-react";
+import { getImageUrl } from "@/lib/image";
 
 export interface BookItem {
   titleBn: string;
@@ -28,7 +29,7 @@ export function BookShowcaseCard({
   price,
   year,
   rokomariUrl,
-  cover = "/images/books/emon-jodi-hoto.webp",
+  cover = "/images/portrait.png",
   descriptionBn,
   descriptionEn,
 }: BookItem) {
@@ -47,7 +48,7 @@ export function BookShowcaseCard({
             {/* Book Cover Container (NO Inner Padding) */}
             <div className="relative aspect-[2/3] w-56 overflow-hidden rounded-2xl border border-amber-500/25 bg-slate-950 shadow-[0_20px_50px_rgba(0,0,0,0.4)] sm:w-64">
               <Image
-                src={cover}
+                src={getImageUrl(cover)}
                 alt={titleBn}
                 fill
                 priority

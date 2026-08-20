@@ -7,6 +7,7 @@ import { NavBar } from "@/screens/home/components/NavBar";
 import { Footer } from "@/screens/home/components/Footer";
 import { useBooksQuery } from "@/services";
 import { BookDetailSkeleton } from "@/components/skeletons/SectionSkeletons";
+import { getImageUrl } from "@/lib/image";
 
 const DEFAULT_BOOK = {
   titleBn: "এমন যদি হতো",
@@ -83,13 +84,14 @@ export function BookScreen() {
 
                   <div className="relative aspect-[2/3] w-[270px] overflow-hidden rounded-3xl border border-amber-500/25 bg-slate-950 shadow-[0_25px_60px_rgba(0,0,0,0.5)] sm:w-[320px]">
                     <Image
-                      src={book.cover || "/images/books/emon-jodi-hoto.webp"}
+                      src={getImageUrl(book.cover)}
                       alt={book.titleBn}
                       fill
                       priority
                       className="object-cover transition-transform duration-700 ease-out group-hover/book:scale-105"
                       sizes="320px"
                     />
+
                     <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
                   </div>
                 </div>

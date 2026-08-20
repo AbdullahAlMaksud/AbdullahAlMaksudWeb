@@ -5,6 +5,7 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { useBooksQuery, useHomeQuery } from "@/services";
 import { BooksSectionSkeleton } from "@/components/skeletons/SectionSkeletons";
+import { getImageUrl } from "@/lib/image";
 
 const DEFAULT_BOOKS_CONFIG = {
   badge: "BOOKS",
@@ -25,6 +26,13 @@ export function BooksSection() {
     : Array.isArray(rawBooksPayload)
       ? rawBooksPayload
       : [];
+
+  const book1Cover = getImageUrl(
+    shelfBooks[0]?.coverImage || shelfBooks[0]?.cover || "/images/books/atomic-habits.jpg"
+  );
+  const book2Cover = getImageUrl(
+    shelfBooks[1]?.coverImage || shelfBooks[1]?.cover || "/images/books/deep-work.jpg"
+  );
 
   return (
     <div id="books" className="scroll-mt-28 space-y-6 pt-4 [perspective:1200px]">
@@ -62,11 +70,11 @@ export function BooksSection() {
         <BooksSectionSkeleton />
       ) : (
         <div className="grid grid-cols-3 gap-3.5 pt-3 sm:gap-5">
-          {/* Book 1: Atomic Habits */}
+          {/* Book 1 */}
           <div className="group relative flex flex-col items-center">
             <div className="relative z-10 h-44 w-full overflow-hidden rounded-xl border border-white/10 bg-[#F6F4EE] shadow-[0_15px_35px_rgba(0,0,0,0.1)] transition-all duration-500 group-hover:-translate-y-2 dark:shadow-[0_15px_35px_rgba(0,0,0,0.85)] sm:h-60 sm:rounded-2xl">
               <Image
-                src="/images/books/atomic-habits.jpg"
+                src={book1Cover}
                 alt={shelfBooks[0]?.title || "Atomic Habits"}
                 fill
                 className="object-cover"
@@ -85,16 +93,16 @@ export function BooksSection() {
                   "linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.3) 45%, transparent 95%)",
               }}
             >
-              <Image src="/images/books/atomic-habits.jpg" alt="" fill className="object-cover" />
+              <Image src={book1Cover} alt="" fill className="object-cover" />
               <div className="absolute inset-0 bg-gradient-to-t from-white via-white/80 to-transparent dark:from-[#07090D] dark:via-[#07090D]/80" />
             </div>
           </div>
 
-          {/* Book 2: Deep Work */}
+          {/* Book 2 */}
           <div className="group relative flex flex-col items-center">
             <div className="relative z-10 h-44 w-full overflow-hidden rounded-xl border border-white/10 bg-[#F59E0B] shadow-[0_15px_35px_rgba(0,0,0,0.1)] transition-all duration-500 group-hover:-translate-y-2 dark:shadow-[0_15px_35px_rgba(0,0,0,0.85)] sm:h-60 sm:rounded-2xl">
               <Image
-                src="/images/books/deep-work.jpg"
+                src={book2Cover}
                 alt={shelfBooks[1]?.title || "Deep Work"}
                 fill
                 className="object-cover"
@@ -113,7 +121,7 @@ export function BooksSection() {
                   "linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.3) 45%, transparent 95%)",
               }}
             >
-              <Image src="/images/books/deep-work.jpg" alt="" fill className="object-cover" />
+              <Image src={book2Cover} alt="" fill className="object-cover" />
               <div className="absolute inset-0 bg-gradient-to-t from-white via-white/80 to-transparent dark:from-[#07090D] dark:via-[#07090D]/80" />
             </div>
           </div>
