@@ -5,8 +5,8 @@
 const BLOB_BASE_URL =
   process.env.NEXT_PUBLIC_BLOB_BASE_URL ||
   (process.env.AAM_STORE_ID
-    ? `https://${process.env.AAM_STORE_ID.replace(/^store_/, "")}.public.blob.vercel-storage.com`
-    : "https://3nkxpLQsJ14XQ0dC.public.blob.vercel-storage.com");
+    ? `https://${process.env.AAM_STORE_ID.replace(/^store_/, "").toLowerCase()}.public.blob.vercel-storage.com`
+    : "https://3nkxplqsj14xq0dc.public.blob.vercel-storage.com");
 
 export function getImageUrl(
   pathOrKey?: string | null,
