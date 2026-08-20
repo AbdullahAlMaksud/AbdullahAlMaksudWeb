@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import { NavBar } from "./components/NavBar";
 
 // Extracted Components
@@ -15,76 +15,7 @@ import { ContactSection } from "./components/ContactSection";
 import { Footer } from "./components/Footer";
 
 export default function HomeScreen() {
-  // Refs for Interactive Golden Curve scroll tracking
   const containerRef = useRef<HTMLDivElement>(null);
-  const pathRef = useRef<SVGPathElement>(null);
-  const [orbPos, setOrbPos] = useState({ x: 740, y: 310 });
-  const [scrollProgress, setScrollProgress] = useState(0);
-  const [pathLength, setPathLength] = useState(0);
-  const [activeNode, setActiveNode] = useState<number | null>(null);
-
-  // Measure path and track scroll smoothly across the entire single canvas
-  useEffect(() => {
-    const path = pathRef.current;
-    if (!path) return;
-
-    const totalLength = path.getTotalLength();
-    setPathLength(totalLength);
-
-    let animationFrameId: number;
-    let currentLerp = 0;
-    let targetProgress = 0;
-
-    const handleScroll = () => {
-      if (!containerRef.current) return;
-      const rect = containerRef.current.getBoundingClientRect();
-      const viewportHeight = window.innerHeight;
-
-      // Track scroll with responsive lead-in so the line fills ahead of the viewport
-      const currentScroll = Math.max(-rect.top, 0);
-
-      // Calculate progress with viewport center bias so line is always filled up to where the user is looking
-      const rawProgress = (currentScroll + viewportHeight * 0.35) / rect.height;
-      targetProgress = Math.min(Math.max(rawProgress, 0), 1);
-    };
-
-    const updateOrb = () => {
-      currentLerp += (targetProgress - currentLerp) * 0.28;
-      setScrollProgress(currentLerp);
-
-      if (path) {
-        const distance = currentLerp * totalLength;
-        const point = path.getPointAtLength(distance);
-        setOrbPos({ x: point.x, y: point.y });
-
-        // Node proximity detection thresholds
-        if (currentLerp > 0.08 && currentLerp < 0.18) {
-          setActiveNode(1); // Hero right node
-        } else if (currentLerp > 0.28 && currentLerp < 0.4) {
-          setActiveNode(2); // Quote bottom node
-        } else if (currentLerp > 0.5 && currentLerp < 0.65) {
-          setActiveNode(3); // Code badge node
-        } else if (currentLerp > 0.75 && currentLerp < 0.88) {
-          setActiveNode(4); // Book badge node
-        } else {
-          setActiveNode(null);
-        }
-      }
-
-      animationFrameId = requestAnimationFrame(updateOrb);
-    };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    window.addEventListener("resize", handleScroll);
-    handleScroll();
-    animationFrameId = requestAnimationFrame(updateOrb);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("resize", handleScroll);
-      cancelAnimationFrame(animationFrameId);
-    };
-  }, []);
 
   const scrollToSection = (id: string) => {
     const el = document.getElementById(id);
@@ -104,14 +35,7 @@ export default function HomeScreen() {
       {/* =========================================================================
           BACKGROUND AMBIENT GLOWS & UNIFIED CONTINUOUS GOLDEN SPLINE
       ========================================================================= */}
-      <BackgroundSpline
-        pathRef={pathRef}
-        pathLength={pathLength}
-        scrollProgress={scrollProgress}
-        activeNode={activeNode}
-        orbPos={orbPos}
-        scrollToSection={scrollToSection}
-      />
+      <BackgroundSpline containerRef={containerRef} scrollToSection={scrollToSection} />
 
       {/* =========================================================================
           PAGE CONTENT: SEAMLESS RESPONSIVE CONTAINER
