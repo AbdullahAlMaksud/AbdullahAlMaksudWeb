@@ -1,7 +1,8 @@
 "use client";
 
 import React from "react";
-import ReactMarkdown from "react-markdown";
+import { BlockContentRenderer } from "@/components/content/BlockContentRenderer";
+import type { ContentPayload } from "@/types/block";
 import {
   Dialog,
   DialogContent,
@@ -16,7 +17,7 @@ export interface ModalArticleData {
   title: string;
   category?: string;
   description: string;
-  fullContent?: string;
+  fullContent?: ContentPayload;
   techStack?: string[];
   metrics?: string[];
   date?: string;
@@ -94,63 +95,10 @@ export const ArticleModal: React.FC<ArticleModalProps> = ({ article, isOpen, onC
             </div>
           )}
 
-          {/* Rendered & Formatted Markdown Content */}
+          {/* Rendered Block / Markdown Content */}
           {article.fullContent && (
             <div className="border-t border-neutral-200 pt-4">
-              <ReactMarkdown
-                components={{
-                  h1: ({ children }) => (
-                    <h1 className="mt-5 mb-3 border-b border-neutral-200 pb-1.5 font-sans text-lg font-bold tracking-tight text-black uppercase sm:text-xl">
-                      {children}
-                    </h1>
-                  ),
-                  h2: ({ children }) => (
-                    <h2 className="mt-5 mb-2 font-sans text-base font-bold tracking-tight text-black uppercase sm:text-lg">
-                      {children}
-                    </h2>
-                  ),
-                  h3: ({ children }) => (
-                    <h3 className="mt-4 mb-2 font-sans text-sm font-bold tracking-tight text-black uppercase sm:text-base">
-                      {children}
-                    </h3>
-                  ),
-                  p: ({ children }) => (
-                    <p className="font-editorial-body mb-3 text-[14px] leading-relaxed text-neutral-800 sm:text-[15px]">
-                      {children}
-                    </p>
-                  ),
-                  strong: ({ children }) => (
-                    <strong className="font-sans font-bold text-black">{children}</strong>
-                  ),
-                  ul: ({ children }) => (
-                    <ul className="my-3 list-disc space-y-1.5 pl-4 marker:text-black">
-                      {children}
-                    </ul>
-                  ),
-                  ol: ({ children }) => (
-                    <ol className="my-3 list-decimal space-y-2.5 pl-5 marker:font-mono marker:font-semibold marker:text-black">
-                      {children}
-                    </ol>
-                  ),
-                  li: ({ children }) => (
-                    <li className="font-editorial-body pl-1 text-[14px] leading-relaxed text-neutral-800 sm:text-[15px]">
-                      {children}
-                    </li>
-                  ),
-                  blockquote: ({ children }) => (
-                    <blockquote className="font-editorial-body my-3 border-l-2 border-black pl-4 text-neutral-700 italic">
-                      {children}
-                    </blockquote>
-                  ),
-                  code: ({ children }) => (
-                    <code className="border border-neutral-200 bg-neutral-100 px-1.5 py-0.5 font-mono text-xs text-neutral-900">
-                      {children}
-                    </code>
-                  ),
-                }}
-              >
-                {article.fullContent.trim()}
-              </ReactMarkdown>
+              <BlockContentRenderer content={article.fullContent} />
             </div>
           )}
         </div>

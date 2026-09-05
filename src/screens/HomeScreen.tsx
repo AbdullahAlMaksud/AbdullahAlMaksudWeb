@@ -13,7 +13,10 @@ import { Footer } from "@/components/layout/Footer";
 import { ArticleModal, ModalArticleData } from "@/components/interactive/ArticleModal";
 import { PhysicsSimulatorModal } from "@/components/interactive/PhysicsSimulatorModal";
 import { ContactEmailModal } from "@/components/interactive/ContactEmailModal";
-import { useCaseStudies } from "@/lib/hooks/useCaseStudies";
+import { useCaseStudiesQuery } from "@/services/case-study";
+import { useBlogsQuery } from "@/services/blog";
+import { useProjectsQuery, type Project } from "@/services/project";
+import type { EnterpriseProject, EssayPublication, DesignSystemModule } from "@/types/portfolio";
 
 export const HomeScreen = () => {
   const [selectedArticle, setSelectedArticle] = useState<ModalArticleData | null>(null);
@@ -21,27 +24,118 @@ export const HomeScreen = () => {
   const [isPhysicsModalOpen, setIsPhysicsModalOpen] = useState<boolean>(false);
   const [isContactModalOpen, setIsContactModalOpen] = useState<boolean>(false);
 
-  const { data: apiCaseStudies } = useCaseStudies({ published: true });
+  // 1. Fetch Case Studies for Section 1 (2 items)
+  const { data: caseStudiesRes } = useCaseStudiesQuery({
+    published: true,
+    limit: 2,
+    includeContent: true,
+  });
 
-  const dynamicProjects = useMemo(() => {
-    if (!apiCaseStudies || apiCaseStudies.length === 0) {
-      return PORTFOLIO_DATA.enterpriseArchitecture.projects;
+  // 2. Fetch Blog Posts for Section 2 (4 featured blogs)
+  const { data: blogsRes } = useBlogsQuery({
+    published: true,
+    featured: true,
+    limit: 4,
+    includeContent: true,
+  });
+
+  // 3. Fetch Projects for Section 3 (3 featured projects)
+  const { data: projectsRes } = useProjectsQuery({
+    featured: true,
+    limit: 5,
+  });
+
+  // Map Case Studies to Section 1 (Exactly 2 items)
+  const dynamicCaseStudies = useMemo<EnterpriseProject[]>(() => {
+    const apiList = caseStudiesRes?.data;
+    if (!apiList || apiList.length === 0) {
+      return PORTFOLIO_DATA.enterpriseArchitecture.projects.slice(0, 2);
     }
-    const mapped = apiCaseStudies.map((cs, idx) => ({
-      id: cs.slug || `case-study-${idx}`,
-      tag: `0${idx + 1} / ${cs.category.toUpperCase()}`,
+    const mapped: EnterpriseProject[] = apiList.map((cs, idx) => ({
+      id: cs.slug || cs.id || `case-study-${idx}`,
+      slug: cs.slug,
+      tag: `0${idx + 1} / ${cs.category?.toUpperCase() || "CASE STUDY"}`,
       title: cs.title.toUpperCase(),
-      description: cs.excerpt || cs.challenge,
+      description: cs.excerpt || cs.challenge || "",
       techStack: cs.stack || [],
       metrics: cs.results?.map((r) => `${r.metric}: ${r.value}`) || [],
-      fullContent: cs.content || cs.solution,
+      fullContent: cs.content || cs.solution || "",
+      content: cs.content,
     }));
     const existingIds = new Set(mapped.map((p) => p.id));
     const remaining = PORTFOLIO_DATA.enterpriseArchitecture.projects.filter(
       (p) => !existingIds.has(p.id)
     );
-    return [...mapped, ...remaining];
-  }, [apiCaseStudies]);
+    return [...mapped, ...remaining].slice(0, 2);
+  }, [caseStudiesRes]);
+
+  // Map Blog Posts to Section 2 (Exactly 4 featured blogs)
+  const dynamicBlogs = useMemo<EssayPublication[]>(() => {
+    const apiList = blogsRes?.data;
+    if (!apiList || apiList.length === 0) {
+      return PORTFOLIO_DATA.literatureEssays.items.slice(0, 4);
+    }
+    const mapped: EssayPublication[] = apiList.map((blog, idx) => ({
+      id: blog.slug || blog.id || `blog-${idx}`,
+      slug: blog.slug,
+      tag: (blog.type || blog.category || "ESSAY").toUpperCase(),
+      title: blog.title,
+      description: blog.excerpt || "",
+      fullContent: blog.content || "",
+      content: blog.content,
+      date: blog.date || "2026",
+      readTime: blog.readTime || "5 min read",
+      isFullWidth: idx >= 2,
+    }));
+    const existingIds = new Set(mapped.map((b) => b.id));
+    const remaining = PORTFOLIO_DATA.literatureEssays.items.filter((b) => !existingIds.has(b.id));
+    return [...mapped, ...remaining].slice(0, 4);
+  }, [blogsRes]);
+
+  // Map Projects to Section 3 (Exactly 3 featured projects)
+  const dynamicProjects = useMemo<DesignSystemModule[]>(() => {
+    const rawList = projectsRes?.data;
+    const apiList = Array.isArray(rawList)
+      ? rawList
+      : Array.isArray((rawList as any)?.items)
+        ? (rawList as any).items
+        : [];
+
+    if (!apiList || apiList.length === 0) {
+      return PORTFOLIO_DATA.designSystems.modules.slice(0, 3);
+    }
+
+    const mapped: DesignSystemModule[] = (apiList as Project[]).map(
+      (proj: Project, idx: number) => ({
+        id: proj.slug || proj.id || `project-${idx}`,
+        tag:
+          proj.category?.toUpperCase() ||
+          (proj.status ? `FEATURED // ${proj.status.toUpperCase()}` : "FEATURED PROJECT"),
+        title: proj.title,
+        description: proj.description || proj.longDescription || "",
+        type: "article",
+        isInteractive: false,
+        details: {
+          overview:
+            typeof proj.fullContent === "string"
+              ? proj.fullContent
+              : proj.longDescription || proj.description || "",
+          keyPoints: [
+            ...(proj.stack || proj.tags || []),
+            ...(proj.coreFeatures?.map(
+              (f: { text: string; desc: string }) => `${f.text}: ${f.desc}`
+            ) || []),
+            proj.liveLink ? `Live: ${proj.liveLink}` : "",
+            proj.github ? `GitHub: ${proj.github}` : "",
+          ].filter(Boolean),
+        },
+      })
+    );
+
+    const existingIds = new Set(mapped.map((m) => m.id));
+    const remaining = PORTFOLIO_DATA.designSystems.modules.filter((m) => !existingIds.has(m.id));
+    return [...mapped, ...remaining].slice(0, 3);
+  }, [projectsRes]);
 
   const handleOpenArticle = (data: ModalArticleData) => {
     setSelectedArticle(data);
@@ -76,35 +170,34 @@ export const HomeScreen = () => {
         {/* Hero Banner with Left Index Rail */}
         <HeroBanner verticalLabel={PORTFOLIO_DATA.meta.verticalLabel} />
 
-        {/* Section 1: Enterprise Architecture */}
+        {/* Section 1: Case Studies (Enterprise Architecture) */}
         <EnterpriseArchitectureSection
-          category={PORTFOLIO_DATA.enterpriseArchitecture.category}
+          category="01 / CASE STUDIES & ARCHITECTURE"
           titleLine1={PORTFOLIO_DATA.enterpriseArchitecture.titleLine1}
           titleLine2={PORTFOLIO_DATA.enterpriseArchitecture.titleLine2}
-          projects={dynamicProjects}
+          projects={dynamicCaseStudies}
           onSelectProject={handleOpenArticle}
         />
 
-        {/* Section 2: Literature & Essays (Inverted Dark Block) */}
-        <LiteratureEssaysSection
-          category={PORTFOLIO_DATA.literatureEssays.category}
-          titleLine1={PORTFOLIO_DATA.literatureEssays.titleLine1}
-          titleLine2={PORTFOLIO_DATA.literatureEssays.titleLine2}
-          imageUrl={PORTFOLIO_DATA.literatureEssays.imageUrl}
-          imageAlt={PORTFOLIO_DATA.literatureEssays.imageAlt}
-          items={PORTFOLIO_DATA.literatureEssays.items}
-          onSelectItem={handleOpenArticle}
-        />
-
-        {/* Section 3: Design Systems (Clean 2x2 Grid) */}
+        {/* Section 2: Engineering Projects (Clean 2x2 Grid) */}
         <DesignSystemsSection
-          category={PORTFOLIO_DATA.designSystems.category}
+          category="02 / ENGINEERING PROJECTS & SYSTEMS"
           title={PORTFOLIO_DATA.designSystems.title}
-          modules={PORTFOLIO_DATA.designSystems.modules}
+          modules={dynamicProjects}
           onOpenPhysicsSimulator={() => setIsPhysicsModalOpen(true)}
           onSelectModule={handleOpenArticle}
         />
 
+        {/* Section 3: Blogs & Essays (Inverted Dark Block) */}
+        <LiteratureEssaysSection
+          category="03 / ESSAYS, MONOGRAPHS & BLOGS"
+          titleLine1={PORTFOLIO_DATA.literatureEssays.titleLine1}
+          titleLine2={PORTFOLIO_DATA.literatureEssays.titleLine2}
+          imageUrl={PORTFOLIO_DATA.literatureEssays.imageUrl}
+          imageAlt={PORTFOLIO_DATA.literatureEssays.imageAlt}
+          items={dynamicBlogs}
+          onSelectItem={handleOpenArticle}
+        />
         {/* Section 4: Full-Width Strategic Advisory Card */}
         <StrategicAdvisorySection
           data={PORTFOLIO_DATA.strategicAdvisory}

@@ -18,7 +18,7 @@ export const EnterpriseArchitectureSection: React.FC<EnterpriseArchitectureSecti
   onSelectProject,
 }) => {
   return (
-    <section id="work" className="w-full border-b border-black bg-white">
+    <section id="work" className="w-full border-b border-black/10 bg-white">
       <div className="mx-auto px-4 py-10 sm:px-8 sm:py-14">
         <div className="grid grid-cols-1 items-start gap-8 md:grid-cols-12 lg:gap-10">
           {/* Col 1: Section Title & Category */}

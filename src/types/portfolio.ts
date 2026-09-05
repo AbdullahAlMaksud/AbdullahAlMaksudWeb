@@ -1,3 +1,5 @@
+import type { ContentPayload } from "./block";
+
 export interface NavItem {
   label: string;
   href: string;
@@ -8,9 +10,11 @@ export interface EnterpriseProject {
   tag: string;
   title: string;
   description: string;
-  fullContent?: string;
+  fullContent?: ContentPayload;
+  content?: ContentPayload;
   techStack?: string[];
   metrics?: string[];
+  slug?: string;
 }
 
 export interface EssayPublication {
@@ -18,10 +22,12 @@ export interface EssayPublication {
   tag: string; // "ESSAY" | "PUBLICATION"
   title: string;
   description: string;
-  fullContent?: string;
+  fullContent?: ContentPayload;
+  content?: ContentPayload;
   date?: string;
   readTime?: string;
   isFullWidth?: boolean;
+  slug?: string;
 }
 
 export interface DesignSystemModule {

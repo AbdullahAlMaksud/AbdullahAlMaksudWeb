@@ -35,7 +35,7 @@ export const DesignSystemsSection: React.FC<DesignSystemsSectionProps> = ({
   };
 
   return (
-    <section id="design" className="w-full border-b border-black bg-white">
+    <section id="design" className="w-full border-b border-black/10 bg-white">
       <div className="mx-auto px-4 py-10 sm:px-8 sm:py-16">
         <div className="grid grid-cols-1 items-stretch gap-8 md:grid-cols-12 lg:gap-12">
           {/* Col 1: Title, Category & 3D Wireframe Canvas */}

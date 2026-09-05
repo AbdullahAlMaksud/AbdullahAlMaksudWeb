@@ -1,3 +1,5 @@
+import type { ContentPayload } from "./block";
+
 export interface BookChapter {
   number: string;
   title: string;
@@ -10,6 +12,7 @@ export interface BookReview {
 }
 
 export interface BookPublication {
+  id?: string;
   slug: string;
   title: string;
   subtitle?: string;
@@ -24,6 +27,8 @@ export interface BookPublication {
   publisher?: string;
   isbn?: string;
   synopsis: string;
+  content?: ContentPayload;
+  contentType?: string;
   themes: string[];
   chapters?: BookChapter[];
   authorNote?: string;

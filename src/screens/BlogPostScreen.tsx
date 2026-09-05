@@ -1,9 +1,9 @@
 import Link from "next/link";
-import ReactMarkdown from "react-markdown";
 import { TopHeader } from "@/components/layout/TopHeader";
 import { Footer } from "@/components/layout/Footer";
 import { PORTFOLIO_DATA } from "@/data/portfolio-data";
 import { ArrowLeft } from "lucide-react";
+import { BlockContentRenderer } from "@/components/content/BlockContentRenderer";
 
 import { BlogPost } from "@/types/blog";
 
@@ -63,58 +63,9 @@ export const BlogPostScreen = ({ post }: BlogPostScreenProps) => {
               </p>
             </header>
 
-            {/* Markdown Body Content */}
+            {/* Block Body Content */}
             <div className="pt-8 sm:pt-10">
-              <ReactMarkdown
-                components={{
-                  h1: ({ children }) => (
-                    <h2 className="font-editorial-body mt-8 mb-4 text-2xl font-bold tracking-tight text-black uppercase sm:text-3xl">
-                      {children}
-                    </h2>
-                  ),
-                  h2: ({ children }) => (
-                    <h3 className="font-editorial-body mt-8 mb-3 text-xl font-bold tracking-tight text-black uppercase sm:text-2xl">
-                      {children}
-                    </h3>
-                  ),
-                  h3: ({ children }) => (
-                    <h4 className="font-editorial-body mt-6 mb-2.5 text-lg font-bold tracking-tight text-black uppercase sm:text-xl">
-                      {children}
-                    </h4>
-                  ),
-                  p: ({ children }) => (
-                    <p className="font-editorial-body mb-6 text-[16px] leading-[1.8] text-neutral-800 sm:text-[17px]">
-                      {children}
-                    </p>
-                  ),
-                  strong: ({ children }) => (
-                    <strong className="font-editorial-body font-bold text-black">{children}</strong>
-                  ),
-                  ul: ({ children }) => (
-                    <ul className="font-editorial-body my-5 list-disc space-y-2.5 pl-5 text-[16px] leading-[1.7] text-neutral-800 marker:text-neutral-400">
-                      {children}
-                    </ul>
-                  ),
-                  ol: ({ children }) => (
-                    <ol className="font-editorial-body my-5 list-decimal space-y-3 pl-5 text-[16px] leading-[1.7] text-neutral-800 marker:font-mono marker:text-neutral-500">
-                      {children}
-                    </ol>
-                  ),
-                  li: ({ children }) => <li className="pl-1 leading-relaxed">{children}</li>,
-                  blockquote: ({ children }) => (
-                    <blockquote className="font-editorial-body my-8 border-l-2 border-black pl-5 text-lg leading-relaxed text-neutral-800 italic">
-                      {children}
-                    </blockquote>
-                  ),
-                  code: ({ children }) => (
-                    <code className="border border-neutral-200 bg-neutral-100 px-1.5 py-0.5 font-mono text-xs text-neutral-900">
-                      {children}
-                    </code>
-                  ),
-                }}
-              >
-                {post.content.trim()}
-              </ReactMarkdown>
+              <BlockContentRenderer content={post.content} />
             </div>
 
             {/* Simple Quiet Sign-Off */}

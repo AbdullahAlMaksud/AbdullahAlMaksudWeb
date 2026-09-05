@@ -33,13 +33,16 @@ export const BlogScreen = () => {
     // Search Query Filter
     if (searchQuery.trim()) {
       const q = searchQuery.toLowerCase().trim();
-      result = result.filter(
-        (post) =>
+      result = result.filter((post) => {
+        const contentStr =
+          typeof post.content === "string" ? post.content : JSON.stringify(post.content || "");
+        return (
           post.title.toLowerCase().includes(q) ||
           post.excerpt.toLowerCase().includes(q) ||
-          post.content.toLowerCase().includes(q) ||
+          contentStr.toLowerCase().includes(q) ||
           post.tag.toLowerCase().includes(q)
-      );
+        );
+      });
     }
 
     // Sorting
